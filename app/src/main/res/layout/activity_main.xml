@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout_activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDefault"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorEggWhite"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_round"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="@string/latest_winning_number"
+        android:textSize="20sp"
+        android:lineSpacingMultiplier="1.2"
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_view_round" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_01"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_02"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_02"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_03"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_01"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_03"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_04"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_02"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_04"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_05"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_03"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_05"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        android:contentDescription="@string/winning_lotto_number"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_06"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_04"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_06"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/image_view_add_01"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_05"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round" />
+
+    <ImageView
+        android:id="@+id/image_view_add_01"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/add"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_lotto_number_06"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_bonus"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_06"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round"
+        app:srcCompat="@drawable/ic_round_add_32" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_bonus"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_view_add_01"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_round" />
+
+    <TextView
+        android:id="@+id/text_view_winning_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/winning_amount"
+        android:gravity="center"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_lotto_number_01" />
+
+    <Button
+        android:id="@+id/button_generate_lotto_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/generate_lotto_number"
+        android:textSize="18sp"
+        android:background="@drawable/button_radius_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_winning_amount" />
+
+    <Button
+        android:id="@+id/button_break_at_once"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:text="@string/break_at_once"
+        android:textSize="14sp"
+        android:background="@drawable/button_radius_background"
+        app:layout_constraintBottom_toBottomOf="@+id/button_generate_lotto_number"
+        app:layout_constraintStart_toEndOf="@+id/button_generate_lotto_number"
+        app:layout_constraintTop_toTopOf="@+id/button_generate_lotto_number" />
+
+    <TextView
+        android:id="@+id/text_view_request_touch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/touch_to_break_egg"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_generate_lotto_number" />
+
+    <TextView
+        android:id="@+id/text_view_generated_lotto_number_01"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_generated_lotto_number_02"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch" />
+
+    <TextView
+        android:id="@+id/text_view_generated_lotto_number_02"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_generated_lotto_number_03"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_generated_lotto_number_01"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch" />
+
+    <TextView
+        android:id="@+id/text_view_generated_lotto_number_03"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_generated_lotto_number_04"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_generated_lotto_number_02"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch" />
+
+    <TextView
+        android:id="@+id/text_view_generated_lotto_number_04"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_generated_lotto_number_05"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_generated_lotto_number_03"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch" />
+
+    <TextView
+        android:id="@+id/text_view_generated_lotto_number_05"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_generated_lotto_number_06"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_generated_lotto_number_04"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch"
+        app:srcCompat="@drawable/ic_egg_32" />
+
+    <TextView
+        android:id="@+id/text_view_generated_lotto_number_06"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/image_view_add_02"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_generated_lotto_number_05"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch" />
+
+    <ImageView
+        android:id="@+id/image_view_add_02"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/add"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_generated_lotto_number_06"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_generated_lotto_number_bonus"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_generated_lotto_number_06"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch"
+        app:srcCompat="@drawable/ic_round_add_32" />
+
+    <TextView
+        android:id="@+id/text_view_generated_lotto_number_bonus"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_view_add_02"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_touch" />
+
+    <Button
+        android:id="@+id/button_winning_confirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_radius_background"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/winning_confirmation"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_generated_lotto_number_01" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/scan_qr_code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_winning_confirmation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

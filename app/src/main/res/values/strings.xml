@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">에그 로또</string>
+
+    <string name="game_result_url">https://dhlottery.co.kr/gameResult.do?method=byWin</string>
+    <string name="latest_winning_number">0000회 당첨결과(최신)</string>
+    <string name="winning_number">회 당첨결과</string>
+    <string name="recency">(최신)</string>
+    <string name="winning_amount">당첨금액</string>
+    <string name="generate_lotto_number">로또번호 생성</string>
+    <string name="break_at_once">한번에 깨기</string>
+    <string name="touch_to_break_egg">터치해서 알을 깨주세요.</string>
+    <string name="winning_lotto_number">Winning lotto number</string>
+    <string name="add">Add</string>
+    <string name="generated_lotto_number">Generated lotto number</string>
+    <string name="monetary_unit">원</string>
+    <string name="winning_confirmation">당첨확인 (QR 코드)</string>
+    <string name="scan_qr_code">QR 코드를 스캔하여 당첨을 확인하세요!</string>
+    <string name="have_the_qr_code_in_the_square">QR 코드를 사각형 안에 비춰주세요.</string>
+    <string name="failed_to_load_web_page">웹페이지를 불러오지 못했습니다.</string>
+    <string name="options">옵션</string>
+    <string name="sound_on">사운드 ON</string>
+    <string name="sound_off">사운드 OFF</string>
+    <string name="weekly_alarm_on">매주 알림 ON</string>
+    <string name="weekly_alarm_off">매주 알림 OFF</string>
+</resources>

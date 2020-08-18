@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/colorEggOrange</color>
+    <color name="colorPrimaryDark">@color/colorEggOrange</color>
+    <color name="colorAccent">@color/colorEggOrange</color>
+
+    <color name="colorEggWhite">#F3F5E6</color>
+    <color name="colorTextViewDefault">#424242</color>
+    <color name="colorBackgroundDefault">#FEFEFE</color>
+    <color name="colorEggOrange">#FEC300</color>
+
+    <color name="colorBlue">#448aff</color>
+    <color name="colorBlueGrey">#525A61</color>
+    <color name="colorGreen">#69f0ae</color>
+    <color name="colorRed">#ff5252</color>
+    <color name="colorYellow">#ffea00</color>
+
+    <color name="colorBlueShadow">#005ecb</color>
+    <color name="colorBlueGreyShadow">#3B4145</color>
+    <color name="colorGreenShadow">#2bbd7e</color>
+    <color name="colorRedShadow">#c50e29</color>
+    <color name="colorYellowShadow">#c7cc00</color>
+</resources>
