@@ -4,7 +4,9 @@
     package="com.duke.xial.elliot.kim.kotlin.egglotto">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
 
     <application
         android:allowBackup="true"
@@ -16,7 +18,14 @@
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".MainActivity">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ad_mob_app_id" />
+
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,6 +38,15 @@
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             tools:replace="screenOrientation" />
+
+        <receiver android:name=".broadcast_receiver.AlarmReceiver" />
+
+        <receiver android:name=".broadcast_receiver.DeviceBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

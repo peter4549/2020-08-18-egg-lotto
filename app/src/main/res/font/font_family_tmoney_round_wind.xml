@@ -4,5 +4,5 @@
     <font
         app:fontStyle="normal"
         app:fontWeight="400"
-        app:font="@font/tmoney_round_wind_extra_bold" />
+        app:font="@font/cookie_run_regular" />
 </font-family>

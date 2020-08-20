@@ -2,23 +2,34 @@ package com.duke.xial.elliot.kim.kotlin.egglotto
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.TransitionDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
+import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ResponseFailedException
 import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModel
 import com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2.LottoNumberApisRequest
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_drawer.*
@@ -27,24 +38,36 @@ import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var alarmManager: AlarmManager
     private lateinit var generatedLottoNumbers: IntArray
     private lateinit var mediaPlayer: MediaPlayer
     private val errorHandler = ErrorHandler(this)
-    private var soundState = ON
-    private var weeklyAlarmState = ON
+    private var soundState = true
+    private var weeklyAlarmState = false
+    private val calendar = Calendar.getInstance().apply {
+        timeInMillis = System.currentTimeMillis()
+        set(Calendar.DAY_OF_WEEK, 6)
+        set(Calendar.HOUR_OF_DAY, 1)
+        set(Calendar.MINUTE, 42)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_drawer)
 
+        alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         mediaPlayer = MediaPlayer.create(this, R.raw.egg_cracking_sound)
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.app_name)
-        toolbar.setNavigationIcon(R.drawable.ic_fried_egg_32)
+        toolbar.setNavigationIcon(R.drawable.ic_raw_egg_32)
 
         initializeSpinner(spinner)
         generateLottoNumber()
@@ -93,14 +116,34 @@ class MainActivity : AppCompatActivity() {
             soundState = isChecked
         }
 
+
         switch_weekly_alarm.isChecked = weeklyAlarmState
         switch_weekly_alarm.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
+            if (isChecked) {
                 showToast(this, getString(R.string.weekly_alarm_on))
-            else
+                setWeeklyAlarm()
+            }
+            else {
                 showToast(this, getString(R.string.weekly_alarm_off))
+                cancelWeeklyAlarm()
+            }
             weeklyAlarmState = isChecked
         }
+
+        MobileAds.initialize(this)
+        ad_view.loadAd(AdRequest.Builder().build())
+        val adListener = object : AdListener() {
+            override fun onAdFailedToLoad(p0: Int) {
+                println("$TAG: onAdFailedToLoad")
+            }
+
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                println("$TAG: onAdLoaded")
+            }
+        }
+
+        ad_view.adListener = adListener
     }
 
     override fun onBackPressed() {
@@ -129,7 +172,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getWeeklyAlarmState() =
         getSharedPreferences(PREFERENCES_OPTIONS, Context.MODE_PRIVATE)
-            .getBoolean(KEY_WEEKLY_ALARM_STATE, true)
+            .getBoolean(KEY_WEEKLY_ALARM_STATE, false)
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
@@ -143,6 +186,44 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setWeeklyAlarm() {
+        val switchedTime = Calendar.getInstance().timeInMillis
+        if (switchedTime > calendar.timeInMillis)
+            setBlockNotification()
+        val alarmIntent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this,
+            0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+
+        showToast(this, longTimeToString(calendar.timeInMillis))
+
+        val receiver = ComponentName(this, DeviceBootReceiver::class.java)
+        packageManager.setComponentEnabledSetting(
+            receiver,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
+
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
+            AlarmManager.INTERVAL_HALF_HOUR/6, pendingIntent)//AlarmManager.INTERVAL_DAY * 7
+    }
+
+    private fun setBlockNotification() {
+        getSharedPreferences(PREFERENCES_OPTIONS, Context.MODE_PRIVATE).edit()
+            .putBoolean(KEY_BLOCK_NOTIFICATION, true).apply()
+    }
+
+    private fun cancelWeeklyAlarm() {
+        val alarmIntent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this,
+            0, alarmIntent, PendingIntent.FLAG_NO_CREATE)
+        try {
+            alarmManager.cancel(pendingIntent)
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
+            println("$TAG: notification not set")
         }
     }
 
@@ -187,7 +268,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startWebViewFragment(url: String) {
-        val s= WebViewFragment.newInstance(url)
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setCustomAnimations(
@@ -197,7 +277,7 @@ class MainActivity : AppCompatActivity() {
                 R.anim.anim_slide_out_to_bottom
             ).replace(
                 R.id.constraint_layout_activity_main,
-                s,
+                WebViewFragment.newInstance(url),
                 TAG_WEB_VIEW_FRAGMENT
             ).commitAllowingStateLoss()
     }
@@ -405,15 +485,15 @@ class MainActivity : AppCompatActivity() {
         showLottoNumberWithAnimation(text_view_generated_lotto_number_bonus, generatedLottoNumbers[6])
     }
 
+    private fun longTimeToString(time: Long, pattern: String  = "yyyy.MM.dd hh:mm:ss"): String =
+        SimpleDateFormat(pattern, Locale.getDefault()).format(time)
+
     companion object {
-        private const val TAG = "MainActivity"
-        private const val TAG_WEB_VIEW_FRAGMENT = "tag_web_view_fragment"
-
-        const val ON = true
-        const val OFF = false
-
-        private const val PREFERENCES_OPTIONS = "preferences_options"
+        const val KEY_BLOCK_NOTIFICATION = "key_block_notification"
+        const val PREFERENCES_OPTIONS = "preferences_options"
         private const val KEY_SOUND_STATE = "key_sound_state"
         private const val KEY_WEEKLY_ALARM_STATE = "key_weekly_alarm_state"
+        private const val TAG = "MainActivity"
+        private const val TAG_WEB_VIEW_FRAGMENT = "tag_web_view_fragment"
     }
 }
