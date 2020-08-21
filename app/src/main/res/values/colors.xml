@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">@color/colorEggOrange</color>
     <color name="colorAccent">@color/colorEggOrange</color>
 
+    <color name="colorControlHighlight">#FFAA71</color>
+
     <color name="colorEggWhite">#F3F5E6</color>
     <color name="colorTextViewDefault">#424242</color>
     <color name="colorBackgroundDefault">#FEFEFE</color>

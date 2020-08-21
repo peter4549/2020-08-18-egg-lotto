@@ -51,9 +51,9 @@ class MainActivity : AppCompatActivity() {
     private var weeklyAlarmState = false
     private val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
-        set(Calendar.DAY_OF_WEEK, 6)
-        set(Calendar.HOUR_OF_DAY, 1)
-        set(Calendar.MINUTE, 42)
+        set(Calendar.DAY_OF_WEEK, WEEKLY_ALARM_DAY_OF_WEEK)
+        set(Calendar.HOUR_OF_DAY, WEEKLY_ALARM_HOUR_OF_DAY)
+        set(Calendar.MINUTE, WEEKLY_ALARM_MINUTE)
         set(Calendar.SECOND, 0)
         set(Calendar.MILLISECOND, 0)
     }
@@ -238,6 +238,8 @@ class MainActivity : AppCompatActivity() {
                     var url = result.contents
                     if (!url.startsWith("http://")) {
                         url = "http://$url"
+                    } else if (!url.startsWith("https://")) {
+                        url = "https://$url"
                     }
 
                     showToast(this, url)
@@ -490,9 +492,9 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val KEY_BLOCK_NOTIFICATION = "key_block_notification"
+        const val KEY_WEEKLY_ALARM_STATE = "key_weekly_alarm_state"
         const val PREFERENCES_OPTIONS = "preferences_options"
         private const val KEY_SOUND_STATE = "key_sound_state"
-        private const val KEY_WEEKLY_ALARM_STATE = "key_weekly_alarm_state"
         private const val TAG = "MainActivity"
         private const val TAG_WEB_VIEW_FRAGMENT = "tag_web_view_fragment"
     }
