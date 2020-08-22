@@ -1,17 +1,25 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto.license
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.duke.xial.elliot.kim.kotlin.egglotto.MainActivity
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
-import kotlinx.android.synthetic.main.activity_main_drawer.*
+import com.duke.xial.elliot.kim.kotlin.egglotto.collapse
+import com.duke.xial.elliot.kim.kotlin.egglotto.expand
 import kotlinx.android.synthetic.main.fragment_licenses.view.*
 import kotlinx.android.synthetic.main.item_view_license.view.*
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.lang.StringBuilder
 
 class LicensesFragment: Fragment() {
+
+    private var runOnlyOnce = true
+    private var originHeight = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,15 +27,40 @@ class LicensesFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_licenses, container, false)
-        view.recycler_view_licenses.apply {
 
+        (requireActivity() as MainActivity).setSupportActionBar(view.toolbar)
+        (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+
+
+        view.recycler_view_licenses.apply {
+            adapter = LicensesRecyclerViewAdapter(licenses)
+            layoutManager = GridLayoutManager(requireContext(), 1)
         }
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home)
+            requireActivity().onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 
     inner class LicensesRecyclerViewAdapter(private val licenses: ArrayList<LicenseModel>):
         RecyclerView.Adapter<LicensesRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(val view: View): RecyclerView.ViewHolder(view)
+
+        private val isExpandedMap = mutableMapOf<Int, Boolean>()
+
+        init {
+            for(i in 0 until licenses.count())
+                isExpandedMap[i] = false
+        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view_license, parent, false)
@@ -40,9 +73,49 @@ class LicensesFragment: Fragment() {
             val license = licenses[position]
 
             holder.view.text_view_name.text = license.name
-            holder.view.text_view_copyright.text = license.copyright
             holder.view.text_view_link.text = license.link
-            holder.view.text_view_license.text = license.license
+
+            if (runOnlyOnce) {
+                originHeight = holder.view.text_view_copyright.layoutParams.height
+                runOnlyOnce = false
+            }
+            holder.view.text_view_copyright.text = license.copyright?.let { getCopyright(it) }
+            holder.view.text_view_copyright.setOnClickListener {
+                if (isExpandedMap[position] != false) {
+                    it.collapse(originHeight)
+                    isExpandedMap[position] = false
+                } else {
+                    it.expand()
+                    isExpandedMap[position] = true
+                }
+            }
         }
+
+        private fun getCopyright(file: String): String {
+            var reader: BufferedReader? = null
+            val stringBuilder = StringBuilder()
+            try {
+                reader = BufferedReader(InputStreamReader(requireContext().assets.open("licenses/$file")))
+                for (line in reader.readLines()) {
+                    stringBuilder.append(line + "\n")
+                }
+            } catch (e: IOException) {
+                (requireActivity() as MainActivity).errorHandler.errorHandling(e, getString(R.string.failed_to_load_file))
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close()
+                    } catch (e: IOException) {
+                        println("$TAG: failed to close buffered reader")
+                    }
+                }
+            }
+
+            return stringBuilder.toString()
+        }
+    }
+
+    companion object {
+        private const val TAG = "LicenseFragment"
     }
 }

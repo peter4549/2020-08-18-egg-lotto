@@ -2,6 +2,7 @@
     <string name="app_name">에그 로또</string>
     <string name="ad_mob_app_id">ca-app-pub-2713759975650849~3531955908</string>
     <string name="banner_ad_unit_id">ca-app-pub-2713759975650849/5205620914</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-2713759975650849/1537784749</string>
 
     <string name="game_result_url">https://dhlottery.co.kr/gameResult.do?method=byWin</string>
     <string name="latest_winning_number">0000회 당첨결과(최신)</string>
@@ -25,4 +26,8 @@
     <string name="weekly_alarm_on">매주 알림 ON</string>
     <string name="weekly_alarm_off">매주 알림 OFF</string>
     <string name="time_to_check_winning_number">당첨결과를 확인할 시간입니다.</string>
+    <string name="settings">설정</string>
+    <string name="open_source_licenses">오픈소스 라이센스</string>
+    <string name="icons_and_font_licenses">아이콘 및 폰트 라이센</string>
+    <string name="failed_to_load_file">파일을 읽어오는데 실패했습니다.</string>
 </resources>

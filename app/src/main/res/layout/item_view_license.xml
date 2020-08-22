@@ -17,24 +17,12 @@
         android:gravity="center_vertical"
         android:padding="8dp"
         android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Name"/>
-
-    <TextView
-        android:id="@+id/text_view_copyright"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_name"
-        tools:text="Copyright"/>
 
     <TextView
         android:id="@+id/text_view_link"
@@ -44,41 +32,37 @@
         android:layout_marginEnd="8dp"
         android:gravity="center_vertical"
         android:padding="8dp"
-        android:textSize="12sp"
+        android:textSize="14sp"
+        android:autoLink="web"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_copyright"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_name"
         tools:text="Link"/>
 
     <TextView
-        android:id="@+id/text_view_license"
+        android:id="@+id/text_view_copyright"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
         android:gravity="center_vertical"
         android:padding="8dp"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_view_show_license"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_link"
-        tools:text="License" />
+        tools:text="Copyright" />
 
-    <TextView
-        android:id="@+id/text_view_show_license"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <View
+        android:id="@+id/bolder_01"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorLightGrey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_view_license"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_link"
-        tools:text="Show license" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_copyright"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

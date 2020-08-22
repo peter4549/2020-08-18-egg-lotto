@@ -25,6 +25,8 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ResponseFailedException
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.SettingsFragment
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.WebViewFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModel
 import com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2.LottoNumberApisRequest
 import com.google.android.gms.ads.AdListener
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var generatedLottoNumbers: IntArray
     private lateinit var mediaPlayer: MediaPlayer
-    private val errorHandler = ErrorHandler(this)
+    private var interstitialAdCount = 0
     private var soundState = true
     private var weeklyAlarmState = false
     private val calendar = Calendar.getInstance().apply {
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         set(Calendar.SECOND, 0)
         set(Calendar.MILLISECOND, 0)
     }
+    val errorHandler = ErrorHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +81,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         button_break_at_once.setOnClickListener {
+            if(interstitialAdCount == 1 || interstitialAdCount == 4) {
+
+            }
+
             if (soundState)
                 mediaPlayer.start()
             openAtOnce()
+            interstitialAdCount++
         }
 
         button_winning_confirmation.setOnClickListener {
@@ -88,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             integrator.setPrompt(getString(R.string.have_the_qr_code_in_the_square))
             integrator.setBeepEnabled(false)
             integrator.setBarcodeImageEnabled(true)
-            integrator.captureActivity = com.journeyapps.barcodescanner.CaptureActivity::class.java
+            integrator.captureActivity = CaptureActivity::class.java
             integrator.initiateScan()
         }
 
@@ -130,6 +138,10 @@ class MainActivity : AppCompatActivity() {
             weeklyAlarmState = isChecked
         }
 
+        text_view_settings.setOnClickListener {
+            startSettingsFragment()
+        }
+
         MobileAds.initialize(this)
         ad_view.loadAd(AdRequest.Builder().build())
         val adListener = object : AdListener() {
@@ -144,6 +156,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         ad_view.adListener = adListener
+    }
+
+    private fun showInterstitialAd() {
+
     }
 
     override fun onBackPressed() {
@@ -207,7 +223,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
-            AlarmManager.INTERVAL_HALF_HOUR/6, pendingIntent)//AlarmManager.INTERVAL_DAY * 7
+            AlarmManager.INTERVAL_DAY * 7, pendingIntent)
     }
 
     private fun setBlockNotification() {
@@ -235,14 +251,7 @@ class MainActivity : AppCompatActivity() {
                     // showToast(this, getString(R.string.failed_to_load_web_page))
                     println("$TAG: result.contents is null")
                 } else {
-                    var url = result.contents
-                    if (!url.startsWith("http://")) {
-                        url = "http://$url"
-                    } else if (!url.startsWith("https://")) {
-                        url = "https://$url"
-                    }
-
-                    showToast(this, url)
+                    val url = result.contents
                     startWebViewFragment(url)
                 }
             } else {
@@ -254,7 +263,6 @@ class MainActivity : AppCompatActivity() {
     private val eggTextViewClickListener = View.OnClickListener { view ->
         if(soundState)
             mediaPlayer.start()
-
         val lottoNumber = when(view.id) {
             R.id.text_view_generated_lotto_number_01 -> generatedLottoNumbers[0]
             R.id.text_view_generated_lotto_number_02 -> generatedLottoNumbers[1]
@@ -267,6 +275,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         showLottoNumberWithAnimation(view as TextView, lottoNumber)
+    }
+
+    private fun startSettingsFragment() {
+        drawer_layout_activity_main.closeDrawer(GravityCompat.END)
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setCustomAnimations(
+                R.anim.anim_slide_in_from_bottom,
+                R.anim.anim_slide_out_to_top,
+                R.anim.anim_slide_in_from_top,
+                R.anim.anim_slide_out_to_bottom
+            ).replace(
+                R.id.constraint_layout_activity_main,
+                SettingsFragment(),
+                TAG_SETTINGS_FRAGMENT
+            ).commit()
     }
 
     private fun startWebViewFragment(url: String) {
@@ -494,8 +518,10 @@ class MainActivity : AppCompatActivity() {
         const val KEY_BLOCK_NOTIFICATION = "key_block_notification"
         const val KEY_WEEKLY_ALARM_STATE = "key_weekly_alarm_state"
         const val PREFERENCES_OPTIONS = "preferences_options"
+        const val TAG_LICENSES_FRAGMENT = "tag_licenses_fragment"
         private const val KEY_SOUND_STATE = "key_sound_state"
         private const val TAG = "MainActivity"
+        private const val TAG_SETTINGS_FRAGMENT = "tag_settings_fragment"
         private const val TAG_WEB_VIEW_FRAGMENT = "tag_web_view_fragment"
     }
 }

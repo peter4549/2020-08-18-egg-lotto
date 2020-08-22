@@ -5,6 +5,7 @@
     <color name="colorAccent">@color/colorEggOrange</color>
 
     <color name="colorControlHighlight">#FFAA71</color>
+    <color name="colorLightGrey">#B0B0B0</color>
 
     <color name="colorEggWhite">#F3F5E6</color>
     <color name="colorTextViewDefault">#424242</color>

@@ -38,8 +38,7 @@
                     android:padding="16dp"
                     android:text="@string/sound_on"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:drawablePadding="4dp" />
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_sound"
@@ -64,8 +63,7 @@
                     android:padding="16dp"
                     android:text="@string/weekly_alarm_on"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:drawablePadding="4dp" />
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_weekly_alarm"
@@ -75,6 +73,19 @@
                     android:switchPadding="16dp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_view_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/settings"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:drawablePadding="16dp"
+                android:background="?attr/selectableItemBackground"
+                app:drawableStartCompat="@drawable/ic_round_settings_24" />
 
         </LinearLayout>
 

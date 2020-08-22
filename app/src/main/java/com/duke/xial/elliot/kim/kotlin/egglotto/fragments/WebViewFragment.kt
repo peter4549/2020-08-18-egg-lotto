@@ -1,4 +1,4 @@
-package com.duke.xial.elliot.kim.kotlin.egglotto
+package com.duke.xial.elliot.kim.kotlin.egglotto.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import com.duke.xial.elliot.kim.kotlin.egglotto.R
 import kotlinx.android.synthetic.main.fragment_web_view.view.*
 
 
@@ -39,7 +40,10 @@ class WebViewFragment(private val url: String? = null) : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(url: String) = WebViewFragment(url)
+        fun newInstance(url: String) =
+            WebViewFragment(
+                url
+            )
 
         private const val TAG = "WebViewFragment"
     }
