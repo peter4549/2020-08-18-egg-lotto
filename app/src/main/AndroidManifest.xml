@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.duke.xial.elliot.kim.kotlin.egglotto">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="false"
@@ -18,14 +18,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/ad_mob_app_id" />
-
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+        <activity android:name=".SplashActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +27,14 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ad_mob_app_id" />
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".CaptureActivity"
             android:screenOrientation="fullSensor"
@@ -40,8 +42,8 @@
             tools:replace="screenOrientation" />
 
         <receiver android:name=".broadcast_receiver.AlarmReceiver" />
-
-        <receiver android:name=".broadcast_receiver.DeviceBootReceiver"
+        <receiver
+            android:name=".broadcast_receiver.DeviceBootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

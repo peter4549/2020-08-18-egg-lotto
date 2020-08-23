@@ -15,6 +15,9 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
+import java.util.*
+import kotlin.Comparator
+import kotlin.collections.ArrayList
 
 class LicensesFragment: Fragment() {
 
@@ -32,6 +35,9 @@ class LicensesFragment: Fragment() {
         (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
 
+        Collections.sort(licenses, Comparator { o1: LicenseModel, o2: LicenseModel ->
+            return@Comparator o1.name.compareTo(o2.name)
+        })
 
         view.recycler_view_licenses.apply {
             adapter = LicensesRecyclerViewAdapter(licenses)

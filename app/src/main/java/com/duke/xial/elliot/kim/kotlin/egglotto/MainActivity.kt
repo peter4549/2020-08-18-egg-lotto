@@ -25,12 +25,14 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ResponseFailedException
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.ExitDialogFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.SettingsFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.WebViewFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModel
 import com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2.LottoNumberApisRequest
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,14 +44,20 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var adRequest: AdRequest
     private lateinit var alarmManager: AlarmManager
     private lateinit var generatedLottoNumbers: IntArray
+    private lateinit var interstitialAd: InterstitialAd
     private lateinit var mediaPlayer: MediaPlayer
     private var interstitialAdCount = 0
+    private var showInterstitialAd = false
     private var soundState = true
+    private var timerCount = 0
+    private var timerTask: Timer? = null
     private var weeklyAlarmState = false
     private val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
@@ -59,12 +67,14 @@ class MainActivity : AppCompatActivity() {
         set(Calendar.SECOND, 0)
         set(Calendar.MILLISECOND, 0)
     }
+    private val exitDialogFragment = ExitDialogFragment()
     val errorHandler = ErrorHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_drawer)
 
+        adRequest = AdRequest.Builder().build()
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         mediaPlayer = MediaPlayer.create(this, R.raw.egg_cracking_sound)
 
@@ -72,22 +82,23 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.app_name)
         toolbar.setNavigationIcon(R.drawable.ic_raw_egg_32)
 
-        initializeSpinner(spinner)
-        generateLottoNumber()
-
         button_generate_lotto_number.setOnClickListener {
             generateLottoNumber()
             returnAllToEggs()
         }
 
         button_break_at_once.setOnClickListener {
-            if(interstitialAdCount == 1 || interstitialAdCount == 4) {
-
+            if(interstitialAdCount == 1) {
+                showInterstitialAd = true
             }
 
             if (soundState)
                 mediaPlayer.start()
+
             openAtOnce()
+            if (showInterstitialAd)
+                showInterstitialAd()
+
             interstitialAdCount++
         }
 
@@ -142,31 +153,56 @@ class MainActivity : AppCompatActivity() {
             startSettingsFragment()
         }
 
-        MobileAds.initialize(this)
-        ad_view.loadAd(AdRequest.Builder().build())
-        val adListener = object : AdListener() {
-            override fun onAdFailedToLoad(p0: Int) {
-                println("$TAG: onAdFailedToLoad")
+        initializeSpinner(spinner)
+        generateLottoNumber()
+
+        initializeAd()
+    }
+
+    private fun initializeAd() {
+        CoroutineScope(Dispatchers.IO).launch {
+            MobileAds.initialize(this@MainActivity)
+            val adListener = object : AdListener() {
+                override fun onAdFailedToLoad(p0: Int) {
+                    println("$TAG: onAdFailedToLoad")
+                }
+
+                override fun onAdLoaded() {
+                    super.onAdLoaded()
+                    println("$TAG: onAdLoaded")
+                }
             }
 
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                println("$TAG: onAdLoaded")
+            interstitialAd = InterstitialAd(this@MainActivity)
+            interstitialAd.adUnitId = getString(R.string.interstitial_ad_unit_id)
+
+            ad_view.adListener = adListener
+            launch(Dispatchers.Main) {
+                ad_view.loadAd(adRequest)
+                interstitialAd.loadAd(adRequest)
             }
         }
-
-        ad_view.adListener = adListener
     }
 
     private fun showInterstitialAd() {
-
+        startTimer()
+        if (interstitialAd.isLoaded)
+            interstitialAd.show()
+        else
+            println("$TAG: interstitial wasn't loaded")
+        showInterstitialAd = false
     }
 
     override fun onBackPressed() {
         if (drawer_layout_activity_main.isDrawerOpen(GravityCompat.END))
             drawer_layout_activity_main.closeDrawer(GravityCompat.END)
         else
-            super.onBackPressed()
+            when {
+                supportFragmentManager.findFragmentByTag(TAG_LICENSES_FRAGMENT) != null -> super.onBackPressed()
+                supportFragmentManager.findFragmentByTag(TAG_SETTINGS_FRAGMENT) != null -> super.onBackPressed()
+                supportFragmentManager.findFragmentByTag(TAG_WEB_VIEW_FRAGMENT) != null -> super.onBackPressed()
+                else -> exitDialogFragment.show(supportFragmentManager, TAG)
+            }
     }
 
     override fun onPause() {
@@ -513,6 +549,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun longTimeToString(time: Long, pattern: String  = "yyyy.MM.dd hh:mm:ss"): String =
         SimpleDateFormat(pattern, Locale.getDefault()).format(time)
+
+    private fun startTimer() {
+        timerTask = timer(period = 60000L) {
+            if (timerCount > 0) {
+                runOnUiThread {
+                    interstitialAd.loadAd(AdRequest.Builder().build())
+                }
+
+                showInterstitialAd = true
+                timerCount = -1
+            }
+            timerCount++
+        }
+    }
 
     companion object {
         const val KEY_BLOCK_NOTIFICATION = "key_block_notification"

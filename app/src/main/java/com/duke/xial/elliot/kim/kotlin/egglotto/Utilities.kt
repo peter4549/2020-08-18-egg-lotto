@@ -1,6 +1,10 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -91,4 +95,30 @@ fun View.collapse(targetHeight: Int) {
 
     animation.duration = 320L
     this.startAnimation(animation)
+}
+
+fun getVersionName(context: Context): String {
+    return try {
+        context.packageManager.getPackageInfo(context.packageName, 0).versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+        return "version info not found"
+    }
+}
+
+fun goToPlayStore(context: Context) {
+    try {
+        context.startActivity(
+            Intent (
+                Intent.ACTION_VIEW,
+            Uri.parse("market://details?id=${context.packageName}"))
+        )
+    } catch (e: ActivityNotFoundException) {
+        context.startActivity(
+            Intent (
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=${context.packageName}")
+            )
+        )
+    }
 }

@@ -30,4 +30,15 @@
     <string name="open_source_licenses">오픈소스 라이센스</string>
     <string name="icons_and_font_licenses">아이콘 및 폰트 라이센</string>
     <string name="failed_to_load_file">파일을 읽어오는데 실패했습니다.</string>
+    <string name="splash_image">Splash Image</string>
+
+    <string name="notice">알림</string>
+    <string name="default_update_message">새로운 버전이 있습니다. 업데이트 하시겠습니까?</string>
+    <string name="update">업데이트</string>
+    <string name="exit">종료</string>
+    <string name="later">나중에</string>
+    <string name="message_new_version">새로운 버전이 있습니다. 업데이트 하시겠습니까?</string>
+    <string name="ok">확인</string>
+    <string name="exit_message">앱을 종료하시겠습니까?</string>
+    <string name="write_review">리뷰 쓰기</string>
 </resources>
