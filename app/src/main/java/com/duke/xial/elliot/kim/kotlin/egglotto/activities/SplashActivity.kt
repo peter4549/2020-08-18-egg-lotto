@@ -1,9 +1,12 @@
-package com.duke.xial.elliot.kim.kotlin.egglotto
+package com.duke.xial.elliot.kim.kotlin.egglotto.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.duke.xial.elliot.kim.kotlin.egglotto.R
+import com.duke.xial.elliot.kim.kotlin.egglotto.getVersionName
+import com.duke.xial.elliot.kim.kotlin.egglotto.goToPlayStore
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 

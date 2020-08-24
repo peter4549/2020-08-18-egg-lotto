@@ -41,4 +41,5 @@
     <string name="ok">확인</string>
     <string name="exit_message">앱을 종료하시겠습니까?</string>
     <string name="write_review">리뷰 쓰기</string>
+    <string name="failed_to_load_lotto_number">로또 번호를 읽어오는데 실패했습니다.</string>
 </resources>

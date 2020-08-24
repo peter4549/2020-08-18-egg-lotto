@@ -8,10 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.duke.xial.elliot.kim.kotlin.egglotto.MainActivity
+import com.duke.xial.elliot.kim.kotlin.egglotto.activities.MainActivity
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
-import com.duke.xial.elliot.kim.kotlin.egglotto.showToast
-import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

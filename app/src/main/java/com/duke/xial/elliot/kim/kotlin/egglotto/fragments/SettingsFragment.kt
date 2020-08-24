@@ -3,10 +3,9 @@ package com.duke.xial.elliot.kim.kotlin.egglotto.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.MainActivity
+import com.duke.xial.elliot.kim.kotlin.egglotto.activities.MainActivity
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
 import com.duke.xial.elliot.kim.kotlin.egglotto.license.LicensesFragment
-import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 
 class SettingsFragment: Fragment() {

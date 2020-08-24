@@ -5,7 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.duke.xial.elliot.kim.kotlin.egglotto.MainActivity
+import com.duke.xial.elliot.kim.kotlin.egglotto.activities.MainActivity
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
 import com.duke.xial.elliot.kim.kotlin.egglotto.collapse
 import com.duke.xial.elliot.kim.kotlin.egglotto.expand

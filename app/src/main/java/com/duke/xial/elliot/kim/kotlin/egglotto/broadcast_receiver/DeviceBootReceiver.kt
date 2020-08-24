@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import com.duke.xial.elliot.kim.kotlin.egglotto.*
+import com.duke.xial.elliot.kim.kotlin.egglotto.activities.MainActivity
 import java.util.*
 
 class DeviceBootReceiver : BroadcastReceiver()  {

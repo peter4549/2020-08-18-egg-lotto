@@ -1,4 +1,4 @@
-package com.duke.xial.elliot.kim.kotlin.egglotto
+package com.duke.xial.elliot.kim.kotlin.egglotto.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -21,6 +21,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.duke.xial.elliot.kim.kotlin.egglotto.*
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
@@ -249,8 +250,6 @@ class MainActivity : AppCompatActivity() {
         val pendingIntent = PendingIntent.getBroadcast(this,
             0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT)
 
-        showToast(this, longTimeToString(calendar.timeInMillis))
-
         val receiver = ComponentName(this, DeviceBootReceiver::class.java)
         packageManager.setComponentEnabledSetting(
             receiver,
@@ -398,7 +397,7 @@ class MainActivity : AppCompatActivity() {
                 .requestLottoNumber(round.toString()).enqueue(object :
                     Callback<LottoNumberModel> {
                     override fun onFailure(call: Call<LottoNumberModel>, t: Throwable) {
-                        errorHandler.errorHandling(t, "로또 번호를 읽어오는데 실패했습니다.")
+                        errorHandler.errorHandling(t, getString(R.string.failed_to_load_lotto_number))
                     }
 
                     override fun onResponse(
@@ -409,13 +408,15 @@ class MainActivity : AppCompatActivity() {
                             val lottoNumberModel = response.body()
                             if (lottoNumberModel != null) {
                                 val firstWinAmount = "%,d".format(lottoNumberModel.firstWinamnt)
-                                val text = "${getString(R.string.winning_amount)} $firstWinAmount ${getString(R.string.monetary_unit)}"
+                                val text = "${getString(R.string.winning_amount)} $firstWinAmount ${getString(
+                                    R.string.monetary_unit
+                                )}"
                                 text_view_winning_amount.text = text
                                 showPastRoundLottoNumber(getLottoNumbers(lottoNumberModel))
                             } else {
                                 errorHandler.errorHandling(
                                     NullPointerException("failed to get lotto number, lottoNumberModel is null"),
-                                    "로또 번호를 읽어오는데 실패했습니다."
+                                    getString(R.string.failed_to_load_lotto_number)
                                 )
                             }
                         } else
@@ -425,7 +426,7 @@ class MainActivity : AppCompatActivity() {
                                         "failed to get lotto number",
                                         errorBody
                                     ),
-                                    "로또 번호를 읽어오는데 실패했습니다."
+                                    getString(R.string.failed_to_load_lotto_number)
                                 )
                             } ?: run {
                                 errorHandler.errorHandling(
@@ -547,8 +548,10 @@ class MainActivity : AppCompatActivity() {
         showLottoNumberWithAnimation(text_view_generated_lotto_number_bonus, generatedLottoNumbers[6])
     }
 
+    /*
     private fun longTimeToString(time: Long, pattern: String  = "yyyy.MM.dd hh:mm:ss"): String =
         SimpleDateFormat(pattern, Locale.getDefault()).format(time)
+     */
 
     private fun startTimer() {
         timerTask = timer(period = 60000L) {
