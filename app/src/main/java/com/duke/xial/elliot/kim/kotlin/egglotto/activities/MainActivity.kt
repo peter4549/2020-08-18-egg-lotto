@@ -26,7 +26,8 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ResponseFailedException
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.ExitDialogFragment
+import com.duke.xial.elliot.kim.kotlin.egglotto.dialog_fragment.EndDialogFragment
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.EggBreakingFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.SettingsFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.WebViewFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModel
@@ -43,7 +44,6 @@ import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
 
@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var adRequest: AdRequest
     private lateinit var alarmManager: AlarmManager
+    private lateinit var endDialogFragment: EndDialogFragment
     private lateinit var generatedLottoNumbers: IntArray
     private lateinit var interstitialAd: InterstitialAd
     private lateinit var mediaPlayer: MediaPlayer
@@ -68,12 +69,14 @@ class MainActivity : AppCompatActivity() {
         set(Calendar.SECOND, 0)
         set(Calendar.MILLISECOND, 0)
     }
-    private val exitDialogFragment = ExitDialogFragment()
+
     val errorHandler = ErrorHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_drawer)
+
+        endDialogFragment = EndDialogFragment()
 
         adRequest = AdRequest.Builder().build()
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -157,6 +160,20 @@ class MainActivity : AppCompatActivity() {
         initializeSpinner(spinner)
         generateLottoNumber()
 
+        // Test
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setCustomAnimations(
+                R.anim.anim_slide_in_from_bottom,
+                R.anim.anim_slide_out_to_top,
+                R.anim.anim_slide_in_from_top,
+                R.anim.anim_slide_out_to_bottom
+            ).replace(
+                R.id.constraint_layout_activity_main,
+                EggBreakingFragment(),
+                TAG_SETTINGS_FRAGMENT
+            ).commit()
+
         initializeAd()
     }
 
@@ -202,7 +219,7 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentByTag(TAG_LICENSES_FRAGMENT) != null -> super.onBackPressed()
                 supportFragmentManager.findFragmentByTag(TAG_SETTINGS_FRAGMENT) != null -> super.onBackPressed()
                 supportFragmentManager.findFragmentByTag(TAG_WEB_VIEW_FRAGMENT) != null -> super.onBackPressed()
-                else -> exitDialogFragment.show(supportFragmentManager, TAG)
+                else -> endDialogFragment.show(supportFragmentManager, TAG)
             }
     }
 

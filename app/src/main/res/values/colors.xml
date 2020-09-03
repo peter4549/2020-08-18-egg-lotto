@@ -23,4 +23,6 @@
     <color name="colorGreenShadow">#2bbd7e</color>
     <color name="colorRedShadow">#c50e29</color>
     <color name="colorYellowShadow">#c7cc00</color>
+
+    <color name="colorFrame">#e25822</color>
 </resources>

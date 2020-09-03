@@ -1,4 +1,4 @@
-package com.duke.xial.elliot.kim.kotlin.egglotto.fragments
+package com.duke.xial.elliot.kim.kotlin.egglotto.dialog_fragment
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -12,7 +12,7 @@ import com.google.android.gms.ads.AdListener
 import kotlinx.android.synthetic.main.fragment_exit_dialog.view.*
 
 
-class ExitDialogFragment: DialogFragment() {
+class EndDialogFragment: DialogFragment() {
 
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -30,6 +30,7 @@ class ExitDialogFragment: DialogFragment() {
                 println("$TAG: onAdLoaded")
             }
         }
+
 
         view.ad_view.adListener = adListener
         view.ad_view.loadAd((requireActivity() as MainActivity).adRequest)

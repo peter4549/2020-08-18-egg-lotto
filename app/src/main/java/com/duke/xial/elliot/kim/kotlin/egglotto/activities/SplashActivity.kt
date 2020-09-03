@@ -58,6 +58,7 @@ class SplashActivity : AppCompatActivity() {
             .setPositiveButton(getString(R.string.update)) { _, _ ->
                 positiveButtonClicked = true
                 goToPlayStore(this)
+                finish()
             }
             .setNegativeButton(
                 if (exitWhenNotUpdating) getString(R.string.exit)
