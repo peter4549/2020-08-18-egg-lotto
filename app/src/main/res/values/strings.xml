@@ -43,4 +43,8 @@
     <string name="write_review">리뷰 쓰기</string>
     <string name="failed_to_load_lotto_number">로또 번호를 읽어오는데 실패했습니다.</string>
     <string name="lucky_numbers">행운의 번호</string>
+    <string name="today_horoscope">오늘의 운세</string>
+    <string name="male">남자</string>
+    <string name="female">여자</string>
+    <string name="date_of_birth">생년월일</string>
 </resources>

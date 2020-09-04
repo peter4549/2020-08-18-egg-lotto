@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDefault"
+    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+    <TextView
+        android:id="@+id/text_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        android:text="@string/today_horoscope"
+        android:textColor="@color/colorTextViewDefault"
+        android:textSize="16sp"
+        android:fontFamily="@font/cookie_run_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_title">
+
+        <RadioButton
+            android:id="@+id/radio_button_set_in_white"
+            style="@style/RadioButtonStyle"
+            android:layout_marginStart="16dp"
+            android:text="@string/male" />
+
+        <RadioButton
+            android:id="@+id/radio_button_set_in_red"
+            style="@style/RadioButtonStyle"
+            android:text="@string/female" />
+
+    </RadioGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center_vertical"
+        android:textColorHint="@color/colorBoxStroke"
+        app:boxStrokeColor="@color/colorBoxStroke"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/colorFrame"
+        app:helperText="ex. 19940910"
+        app:helperTextEnabled="true"
+        app:helperTextTextAppearance="@style/FontCookieRunRegular"
+        app:hintTextColor="@color/colorBoxStroke"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:hint="@string/date_of_birth"
+            android:inputType="numberDecimal"
+            android:padding="12dp"
+            android:textAppearance="@style/FontCookieRunRegular"
+            android:textColor="@color/colorTextInputEditTextColor"
+            android:textSize="16sp"
+            android:theme="@style/TextInputLayoutStyle"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- style="@style/Widget.MaterialComponents.TextInputLayout.*.ExposedDropdownMenu" -->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_calendar"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/radio_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radio_group"
+        app:layout_constraintTop_toTopOf="@+id/radio_group">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorEggOrange"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

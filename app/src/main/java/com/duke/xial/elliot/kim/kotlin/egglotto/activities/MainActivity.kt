@@ -27,8 +27,8 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootRec
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ResponseFailedException
 import com.duke.xial.elliot.kim.kotlin.egglotto.dialog_fragment.EndDialogFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.EggBreakingFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.SettingsFragment
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.TodayHoroscopeFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.WebViewFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModel
 import com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2.LottoNumberApisRequest
@@ -161,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         generateLottoNumber()
 
         // Test
+        /*
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setCustomAnimations(
@@ -173,6 +174,25 @@ class MainActivity : AppCompatActivity() {
                 EggBreakingFragment(),
                 TAG_SETTINGS_FRAGMENT
             ).commit()
+
+
+
+        // Test Web.
+        startWebViewFragment(WINNING_RESULT_URL)
+        */
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setCustomAnimations(
+                R.anim.anim_slide_in_from_bottom,
+                R.anim.anim_slide_out_to_top,
+                R.anim.anim_slide_in_from_top,
+                R.anim.anim_slide_out_to_bottom
+            ).replace(
+                R.id.constraint_layout_activity_main,
+                TodayHoroscopeFragment(),
+                TAG_SETTINGS_FRAGMENT
+            ).commit()
+
 
         initializeAd()
     }
@@ -589,6 +609,7 @@ class MainActivity : AppCompatActivity() {
         const val KEY_WEEKLY_ALARM_STATE = "key_weekly_alarm_state"
         const val PREFERENCES_OPTIONS = "preferences_options"
         const val TAG_LICENSES_FRAGMENT = "tag_licenses_fragment"
+        private const val WINNING_RESULT_URL = "https://m.dhlottery.co.kr/gameResult.do?method=byWin&wiselog=M_A_1_8"
         private const val KEY_SOUND_STATE = "key_sound_state"
         private const val TAG = "MainActivity"
         private const val TAG_SETTINGS_FRAGMENT = "tag_settings_fragment"

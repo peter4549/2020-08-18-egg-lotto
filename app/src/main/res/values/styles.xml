@@ -28,4 +28,26 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorEggOrange</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="colorControlActivated">@color/colorTextInputEditTextColor</item>
+    </style>
+
+    <style name="FontCookieRunRegular">
+        <item name="android:fontFamily">@font/cookie_run_regular</item>
+    </style>
+
+    <style name="RadioButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:buttonTint">@color/colorEggOrange</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/FontCookieRunRegular</item>
+        <item name="android:textColor">@color/colorTextInputEditTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

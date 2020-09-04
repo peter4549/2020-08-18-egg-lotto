@@ -14,7 +14,6 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.GridLayoutManagerWrapper
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
 import com.duke.xial.elliot.kim.kotlin.egglotto.adapters.BaseRecyclerViewAdapter
 import com.duke.xial.elliot.kim.kotlin.egglotto.showToast
-import kotlinx.android.synthetic.main.fragment_egg_breaking.*
 import kotlinx.android.synthetic.main.fragment_egg_breaking.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +38,9 @@ class EggBreakingFragment: Fragment() {
         }
 
         view.button_break_at_once.setOnClickListener {
-
+            if (numberCount < 6) {
+                eggsRecyclerViewAdapter.breakAtOnce()
+            }
         }
 
         eggsRecyclerViewAdapter = EggsRecyclerViewAdapter(
@@ -167,6 +168,7 @@ class EggBreakingFragment: Fragment() {
         : BaseRecyclerViewAdapter(layoutId, numbers) {
 
         private val brokenEggs = arrayListOf<TextView>()
+        private val boundViews = arrayListOf<TextView>()
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val number = items[position]
@@ -178,12 +180,16 @@ class EggBreakingFragment: Fragment() {
                     updateNumber(number)
                 }
             }
+
+            boundViews.add(holder.view as TextView)
         }
 
         fun breakAtOnce() {
             val randomNumbers = (0..17).shuffled().take(6)
             for (number in randomNumbers) {
-                //breakEgg()
+                breakEgg(boundViews[number], items[number])
+                brokenEggs.add(boundViews[number])
+                updateNumber(items[number])
             }
         }
 
@@ -191,6 +197,8 @@ class EggBreakingFragment: Fragment() {
             for (view in brokenEggs) {
                 returnToEgg(view)
             }
+
+            boundViews.clear()
 
             val itemCount = items.count()
             items.clear()
@@ -213,11 +221,9 @@ class EggBreakingFragment: Fragment() {
             for (view in brokenEggs) {
                 returnToEgg(view)
             }
-            
+
             val itemCount = items.count()
-            println("VVVVV + $items")
             items.clear()
-            println("SSSSS + $items")
             notifyItemRangeRemoved(0, itemCount)
         }
     }
