@@ -106,7 +106,7 @@ class LicensesFragment: Fragment() {
                     stringBuilder.append(line + "\n")
                 }
             } catch (e: IOException) {
-                (requireActivity() as MainActivity).errorHandler.errorHandling(e, getString(R.string.failed_to_load_file))
+                MainActivity.errorHandler.errorHandling(e, getString(R.string.failed_to_load_file))
             } finally {
                 if (reader != null) {
                     try {

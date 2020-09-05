@@ -9,6 +9,10 @@
         <item name="android:buttonStyle">@style/ButtonStyle</item>
     </style>
 
+    <style name="MaterialComponentsTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
+    </style>
+
     <style name="EggTextViewStyle">
         <item name="android:layout_width">36dp</item>
         <item name="android:layout_height">36dp</item>
@@ -18,20 +22,14 @@
     </style>
 
     <style name="TextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
-        <item name="android:fontFamily">@font/font_family_tmoney_round_wind</item>
+        <item name="android:fontFamily">@font/font_family_cookie_run_regular</item>
         <item name="android:textColor">@color/colorTextViewDefault</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="ButtonStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
-        <item name="android:fontFamily">@font/font_family_tmoney_round_wind</item>
+        <item name="android:fontFamily">@font/font_family_cookie_run_regular</item>
         <item name="android:includeFontPadding">false</item>
-    </style>
-
-    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/colorEggOrange</item>
-        <item name="boxStrokeWidth">2dp</item>
-        <item name="colorControlActivated">@color/colorTextInputEditTextColor</item>
     </style>
 
     <style name="FontCookieRunRegular">
@@ -44,8 +42,8 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layoutDirection">rtl</item>
         <item name="android:buttonTint">@color/colorEggOrange</item>
+        <item name="android:fontFamily">@font/font_family_cookie_run_regular</item>
         <item name="android:gravity">center</item>
-        <item name="android:textAppearance">@style/FontCookieRunRegular</item>
         <item name="android:textColor">@color/colorTextInputEditTextColor</item>
         <item name="android:textSize">14sp</item>
     </style>

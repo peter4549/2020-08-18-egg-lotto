@@ -47,4 +47,6 @@
     <string name="male">남자</string>
     <string name="female">여자</string>
     <string name="date_of_birth">생년월일</string>
+    <string name="show_horoscope">운세보기</string>
+    <string name="lunar_or_solar">음력/양력</string>
 </resources>

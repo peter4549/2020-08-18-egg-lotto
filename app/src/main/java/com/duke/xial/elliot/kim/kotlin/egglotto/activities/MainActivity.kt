@@ -70,13 +70,12 @@ class MainActivity : AppCompatActivity() {
         set(Calendar.MILLISECOND, 0)
     }
 
-    val errorHandler = ErrorHandler(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_drawer)
 
         endDialogFragment = EndDialogFragment()
+        errorHandler = ErrorHandler(this)
 
         adRequest = AdRequest.Builder().build()
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -610,6 +609,7 @@ class MainActivity : AppCompatActivity() {
         const val PREFERENCES_OPTIONS = "preferences_options"
         const val TAG_LICENSES_FRAGMENT = "tag_licenses_fragment"
         private const val WINNING_RESULT_URL = "https://m.dhlottery.co.kr/gameResult.do?method=byWin&wiselog=M_A_1_8"
+        lateinit var errorHandler: ErrorHandler
         private const val KEY_SOUND_STATE = "key_sound_state"
         private const val TAG = "MainActivity"
         private const val TAG_SETTINGS_FRAGMENT = "tag_settings_fragment"
