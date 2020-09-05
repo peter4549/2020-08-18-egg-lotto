@@ -17,7 +17,7 @@
         android:layout_marginTop="24dp"
         android:padding="8dp"
         android:text="@string/today_horoscope"
-        android:textColor="@color/colorTextViewDefault"
+        android:textColor="@color/colorTextDefault"
         android:textSize="18sp"
         android:fontFamily="@font/font_family_cookie_run_regular"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,20 +36,20 @@
         app:layout_constraintTop_toBottomOf="@+id/text_view_title">
 
         <RadioButton
-            android:id="@+id/radio_button_set_in_white"
+            android:id="@+id/radio_button_male"
             style="@style/RadioButtonStyle"
             android:layout_marginStart="16dp"
             android:text="@string/male" />
 
         <RadioButton
-            android:id="@+id/radio_button_set_in_red"
+            android:id="@+id/radio_button_female"
             style="@style/RadioButtonStyle"
             android:text="@string/female" />
 
     </RadioGroup>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_date_of_birth"
+        android:id="@+id/text_input_layout_birth"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -63,6 +63,9 @@
         app:colorControlActivated="@color/colorTextInputEditTextColor"
         app:endIconMode="clear_text"
         app:endIconTint="@color/colorFrame"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/FontCookieRunRegular"
+        app:errorTextColor="@color/colorFrame"
         app:helperText="ex. 19940910"
         app:helperTextEnabled="true"
         app:helperTextTextAppearance="@style/FontCookieRunRegular"
@@ -72,15 +75,17 @@
         app:layout_constraintTop_toBottomOf="@+id/text_input_layout_calendar">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_email"
+            android:id="@+id/edit_text_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:hint="@string/date_of_birth"
             android:inputType="numberDecimal"
             android:padding="12dp"
+            android:maxLength="8"
             android:textAppearance="@style/FontCookieRunRegular"
             android:textColor="@color/colorTextInputEditTextColor"
+            android:textCursorDrawable="@drawable/cursor"
             android:textSize="16sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +107,7 @@
         app:boxCornerRadiusTopStart="4dp"
         app:boxStrokeColor="@color/colorEggOrange"
         app:boxStrokeWidth="1dp"
-        app:endIconTint="@color/colorTextViewDefault"
+        app:endIconTint="@color/colorTextDefault"
         app:helperText="@string/lunar_or_solar"
         app:helperTextEnabled="true"
         app:helperTextTextAppearance="@style/FontCookieRunRegular"
@@ -119,7 +124,7 @@
             android:inputType="none"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textColor="@color/colorTextViewDefault"
+            android:textColor="@color/colorTextDefault"
             android:textSize="16sp"
             tools:ignore="LabelFor"
             tools:text="양력" />
@@ -134,7 +139,7 @@
         android:background="@drawable/button_radius_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_layout_date_of_birth">
+        app:layout_constraintTop_toBottomOf="@+id/text_input_layout_birth">
 
         <Button
             android:id="@+id/button_show_horoscope"
@@ -154,10 +159,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:gravity="center"
         android:padding="4dp"
+        android:fontFamily="@font/font_family_cookie_run_regular"
+        android:textColor="@color/colorTextDefault"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame_layout_show_horoscope"
@@ -168,9 +176,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:fontFamily="@font/font_family_cookie_run_regular"
         android:gravity="center_horizontal"
         android:padding="4dp"
+        android:textColor="@color/colorTextLightDefault"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

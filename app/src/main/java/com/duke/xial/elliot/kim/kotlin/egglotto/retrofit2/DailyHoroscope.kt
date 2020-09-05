@@ -50,9 +50,3 @@ object DailyHoroscopeApisRequest {
         getRetrofitAddedHeader().create(DailyHoroscope.DailyHoroscopeService::class.java)
 
 }
-
-object SolarCalendar {
-    const val solar = "solar"
-    const val lunarGeneral = "lunarGeneral"
-    const val lunarLeap = "lunarLeap"
-}

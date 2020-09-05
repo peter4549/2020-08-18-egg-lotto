@@ -21,17 +21,17 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import com.duke.xial.elliot.kim.kotlin.egglotto.*
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ResponseFailedException
 import com.duke.xial.elliot.kim.kotlin.egglotto.dialog_fragment.EndDialogFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.SettingsFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.TodayHoroscopeFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.WebViewFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModel
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.*
+import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModelTemp
 import com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2.LottoNumberApisRequest
+import com.duke.xial.elliot.kim.kotlin.egglotto.view_model.ViewModel
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
@@ -50,6 +50,7 @@ import kotlin.concurrent.timer
 class MainActivity : AppCompatActivity() {
 
     lateinit var adRequest: AdRequest
+    lateinit var viewModel: ViewModel
     private lateinit var alarmManager: AlarmManager
     private lateinit var endDialogFragment: EndDialogFragment
     private lateinit var generatedLottoNumbers: IntArray
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         set(Calendar.SECOND, 0)
         set(Calendar.MILLISECOND, 0)
     }
+    private val historyFragment = HistoryFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +82,21 @@ class MainActivity : AppCompatActivity() {
         adRequest = AdRequest.Builder().build()
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         mediaPlayer = MediaPlayer.create(this, R.raw.egg_cracking_sound)
+
+        val viewModelFactory =
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[ViewModel::class.java]
+        viewModel.getAll().observe(this, androidx.lifecycle.Observer { lottoNumbersList ->
+            when(viewModel.state) {
+                ViewModel.INITIALIZE -> {
+                    historyFragment.lottoNumbersRecyclerViewAdapter.insertAll(lottoNumbersList)
+                    viewModel.state = ViewModel.INITIALIZED
+                }
+                ViewModel.INSERT -> historyFragment.lottoNumbersRecyclerViewAdapter.insert(viewModel.changedLottoNumbers)
+                ViewModel.DELETE -> historyFragment.lottoNumbersRecyclerViewAdapter.remove(viewModel.changedLottoNumbers)
+            }
+
+        })
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.app_name)
@@ -160,7 +177,7 @@ class MainActivity : AppCompatActivity() {
         generateLottoNumber()
 
         // Test
-        /*
+
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setCustomAnimations(
@@ -176,9 +193,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
         // Test Web.
+        /*
         startWebViewFragment(WINNING_RESULT_URL)
         */
+
+        /* test
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setCustomAnimations(
@@ -191,6 +212,8 @@ class MainActivity : AppCompatActivity() {
                 TodayHoroscopeFragment(),
                 TAG_SETTINGS_FRAGMENT
             ).commit()
+
+         */
 
 
         initializeAd()
@@ -431,14 +454,14 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             LottoNumberApisRequest.getLottoNumberService()
                 .requestLottoNumber(round.toString()).enqueue(object :
-                    Callback<LottoNumberModel> {
-                    override fun onFailure(call: Call<LottoNumberModel>, t: Throwable) {
+                    Callback<LottoNumberModelTemp> {
+                    override fun onFailure(call: Call<LottoNumberModelTemp>, t: Throwable) {
                         errorHandler.errorHandling(t, getString(R.string.failed_to_load_lotto_number))
                     }
 
                     override fun onResponse(
-                        call: Call<LottoNumberModel>,
-                        response: Response<LottoNumberModel>
+                        call: Call<LottoNumberModelTemp>,
+                        response: Response<LottoNumberModelTemp>
                     ) {
                         if (response.isSuccessful) {
                             val lottoNumberModel = response.body()
@@ -475,15 +498,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLottoNumbers(lottoNumber: LottoNumberModel): IntArray {
+    private fun getLottoNumbers(lottoNumberTemp: LottoNumberModelTemp): IntArray {
         return IntArray(7).apply {
-            set(0, lottoNumber.drwtNo1.toInt())
-            set(1, lottoNumber.drwtNo2.toInt())
-            set(2, lottoNumber.drwtNo3.toInt())
-            set(3, lottoNumber.drwtNo4.toInt())
-            set(4, lottoNumber.drwtNo5.toInt())
-            set(5, lottoNumber.drwtNo6.toInt())
-            set(6, lottoNumber.bnusNo.toInt())
+            set(0, lottoNumberTemp.drwtNo1.toInt())
+            set(1, lottoNumberTemp.drwtNo2.toInt())
+            set(2, lottoNumberTemp.drwtNo3.toInt())
+            set(3, lottoNumberTemp.drwtNo4.toInt())
+            set(4, lottoNumberTemp.drwtNo5.toInt())
+            set(5, lottoNumberTemp.drwtNo6.toInt())
+            set(6, lottoNumberTemp.bnusNo.toInt())
         }
     }
 

@@ -8,7 +8,8 @@
     <color name="colorLightGrey">#B0B0B0</color>
 
     <color name="colorEggWhite">#F3F5E6</color>
-    <color name="colorTextViewDefault">#424242</color>
+    <color name="colorTextDefault">#424242</color>
+    <color name="colorTextLightDefault">#808080</color>
     <color name="colorBackgroundDefault">#FEFEFE</color>
     <color name="colorEggOrange">#FEC300</color>
 

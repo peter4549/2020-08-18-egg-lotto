@@ -1,6 +1,6 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2
 
-import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModel
+import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModelTemp
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -13,7 +13,7 @@ object LottoNumberApis {
         @GET("common.do?method=getLottoNumber")
         fun requestLottoNumber(
             @Query("drwNo") drwNo: String
-        ): Call<LottoNumberModel>
+        ): Call<LottoNumberModelTemp>
     }
 }
 

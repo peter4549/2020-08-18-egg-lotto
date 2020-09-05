@@ -23,7 +23,7 @@
 
     <style name="TextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/font_family_cookie_run_regular</item>
-        <item name="android:textColor">@color/colorTextViewDefault</item>
+        <item name="android:textColor">@color/colorTextDefault</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 

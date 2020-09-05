@@ -86,6 +86,10 @@ class LicensesFragment: Fragment() {
                 runOnlyOnce = false
             }
             holder.view.text_view_copyright.text = license.copyright?.let { getCopyright(it) }
+
+            if (holder.view.text_view_copyright.text.isBlank())
+                holder.view.text_view_copyright.isEnabled = false
+
             holder.view.text_view_copyright.setOnClickListener {
                 if (isExpandedMap[position] != false) {
                     it.collapse(originHeight)

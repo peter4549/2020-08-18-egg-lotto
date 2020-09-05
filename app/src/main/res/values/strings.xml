@@ -49,4 +49,5 @@
     <string name="date_of_birth">생년월일</string>
     <string name="show_horoscope">운세보기</string>
     <string name="lunar_or_solar">음력/양력</string>
+    <string name="my_lucky_numbers">내 행운의 숫자</string>
 </resources>
