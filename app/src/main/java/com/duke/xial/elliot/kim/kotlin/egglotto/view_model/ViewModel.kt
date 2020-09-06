@@ -26,18 +26,24 @@ class ViewModel (application: Application): AndroidViewModel(application) {
     fun getAll(): LiveData<MutableList<LottoNumbersModel>> = database.dao().getAll()
 
     fun insert(lottoNumbers: LottoNumbersModel) {
+        state = INSERT
         scope.launch {
-            changedLottoNumbers = lottoNumbers.deepCopy()
+            changedLottoNumbers = lottoNumbers
             database.dao().insert(lottoNumbers)
-            state = INSERT
         }
     }
 
     fun delete(lottoNumbers: LottoNumbersModel) {
+        state = DELETE
         scope.launch {
-            changedLottoNumbers = lottoNumbers.deepCopy()
+            changedLottoNumbers = lottoNumbers
             database.dao().delete(lottoNumbers)
-            state = DELETE
+        }
+    }
+
+    fun nukeTable() {
+        scope.launch {
+            database.dao().nukeTable()
         }
     }
 

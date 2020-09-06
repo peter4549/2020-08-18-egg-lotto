@@ -7,8 +7,8 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
+@Suppress("SpellCheckingInspection")
 interface LottoNumbersDao {
-    @Suppress("SpellCheckingInspection")
     @Query("SELECT * FROM lottonumbersmodel")
     fun getAll(): LiveData<MutableList<LottoNumbersModel>>
 
@@ -17,4 +17,7 @@ interface LottoNumbersDao {
 
     @Delete
     fun delete(note: LottoNumbersModel)
+
+    @Query("DELETE FROM lottonumbersmodel")
+    fun nukeTable()
 }

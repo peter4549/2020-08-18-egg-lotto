@@ -7,15 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.duke.xial.elliot.kim.kotlin.egglotto.GridLayoutManagerWrapper
-import com.duke.xial.elliot.kim.kotlin.egglotto.R
+import com.duke.xial.elliot.kim.kotlin.egglotto.*
 import com.duke.xial.elliot.kim.kotlin.egglotto.activities.MainActivity
 import com.duke.xial.elliot.kim.kotlin.egglotto.adapters.BaseRecyclerViewAdapter
 import com.duke.xial.elliot.kim.kotlin.egglotto.database.LottoNumbersModel
-import com.duke.xial.elliot.kim.kotlin.egglotto.showToast
 import kotlinx.android.synthetic.main.fragment_egg_breaking.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +27,8 @@ import kotlin.collections.ArrayList
 
 class EggBreakingFragment: Fragment() {
 
+    private lateinit var fragmentView: View
+    private lateinit var buttonStoreLottoNumbers: Button
     private lateinit var eggsRecyclerViewAdapter: EggsRecyclerViewAdapter
     private lateinit var numbersRecyclerViewAdapter: NumbersRecyclerViewAdapter
     private var numberCount = 0
@@ -38,14 +39,23 @@ class EggBreakingFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_egg_breaking, container, false)
+        if (::fragmentView.isInitialized)
+            return fragmentView
 
-        view.button_generate_lotto_number.setOnClickListener {
-            refreshEggs()
+        fragmentView = inflater.inflate(R.layout.fragment_egg_breaking, container, false)
+
+        fragmentView.button_generate_lotto_number.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                fragmentView.button_break_at_once.isEnabled = false
+                refreshEggs()
+                delay(120L)
+                fragmentView.button_break_at_once.isEnabled = true
+            }
         }
 
-        view.button_break_at_once.setOnClickListener {
+        fragmentView.button_break_at_once.setOnClickListener {
             if (numberCount < 6) {
+                (requireActivity() as MainActivity).startSound()
                 eggsRecyclerViewAdapter.breakAtOnce()
             }
         }
@@ -54,7 +64,7 @@ class EggBreakingFragment: Fragment() {
             R.layout.item_view_egg,
             generateLottoNumbers().toList() as ArrayList<Int>
         )
-        view.recycler_view_eggs.apply {
+        fragmentView.recycler_view_eggs.apply {
             adapter = eggsRecyclerViewAdapter
             layoutManager = GridLayoutManagerWrapper(requireContext(), 3).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
@@ -65,14 +75,23 @@ class EggBreakingFragment: Fragment() {
             R.layout.item_view_egg,
             arrayListOf()
         )
-        view.recycler_view_numbers.apply {
+        fragmentView.recycler_view_numbers.apply {
             adapter = numbersRecyclerViewAdapter
             layoutManager = GridLayoutManagerWrapper(requireContext(), 1).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
             }
         }
 
-        return view
+        buttonStoreLottoNumbers = fragmentView.button_store_lotto_numbers
+        buttonStoreLottoNumbers.setOnClickListener {
+            it.isEnabled = false
+            (requireActivity() as MainActivity).viewModel
+                .insert(LottoNumbersModel(creationTime = getCurrentTime(),
+                    lottoNumbers = obtainedNumbers.toTypedArray()))
+            showToast(requireContext(), "저장되었습니다.")
+        }
+
+        return fragmentView
     }
 
     private fun generateLottoNumbers(): IntArray {
@@ -152,13 +171,11 @@ class EggBreakingFragment: Fragment() {
     }
 
     private fun refreshEggs() {
+        obtainedNumbers.clear()
+        buttonStoreLottoNumbers.fadeOut(duration = 100)
         eggsRecyclerViewAdapter.clear()
         eggsRecyclerViewAdapter.items.addAll(generateLottoNumbers().toList() as ArrayList<Int>)
-        //eggsRecyclerViewAdapter.notifyDataSetChanged()
-
         numbersRecyclerViewAdapter.clear()
-        //numbersRecyclerViewAdapter.itemsarrayListOf()
-
         numberCount = 0
     }
 
@@ -167,9 +184,9 @@ class EggBreakingFragment: Fragment() {
 
         if (numberCount > 5) {
             showToast(requireContext(), "최고의 번호입니다.")
-            (requireActivity() as MainActivity).viewModel
-                .insert(LottoNumbersModel(creationTime = getCurrentTime(),
-                    lottoNumbers = obtainedNumbers.toTypedArray()))
+            buttonStoreLottoNumbers.isEnabled = true
+            buttonStoreLottoNumbers.fadeIn(duration = 100)
+
             return
         }
     }
@@ -185,6 +202,7 @@ class EggBreakingFragment: Fragment() {
 
             holder.view.setOnClickListener {
                 if (numberCount < 6) {
+                    (requireActivity() as MainActivity).startSound()
                     breakEgg(it as TextView, number)
                     brokenEggs.add(it)
                     obtainedNumbers.add(number)
@@ -201,9 +219,9 @@ class EggBreakingFragment: Fragment() {
             shuffle(remainingNumbers)
             for (number in remainingNumbers.take(6 - numberCount)) {
                 breakEgg(boundViews[number], items[number])
-                brokenEggs.add(boundViews[number])
-                obtainedNumbers.add(number)
                 updateNumber(items[number])
+                brokenEggs.add(boundViews[number])
+                obtainedNumbers.add(items[number])
             }
         }
 

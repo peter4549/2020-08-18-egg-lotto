@@ -12,39 +12,38 @@ import androidx.fragment.app.Fragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
 import kotlinx.android.synthetic.main.fragment_web_view.view.*
 
+class WebViewFragment : Fragment() {
 
-class WebViewFragment(private val url: String? = null) : Fragment() {
+    private lateinit var fragmentView: View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_web_view, container, false)
+        if (::fragmentView.isInitialized)
+            return fragmentView
 
-        val webSettings: WebSettings = view.web_view.settings
+        fragmentView = inflater.inflate(R.layout.fragment_web_view, container, false)
+
+        val webSettings: WebSettings = fragmentView.web_view.settings
         @SuppressLint("SetJavaScriptEnabled")
         webSettings.javaScriptEnabled = true
-        view.web_view.webViewClient = object : WebViewClient() {
+        fragmentView.web_view.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 println("$TAG: page loaded, url: $url")
             }
         }
 
-        return view
+        return fragmentView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (url != null)
-            view.web_view.loadUrl(url)
+        view.web_view.loadUrl(WINNING_RESULT_URL)
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(url: String) =
-            WebViewFragment(
-                url
-            )
-
         private const val TAG = "WebViewFragment"
+        private const val WINNING_RESULT_URL = "https://m.dhlottery.co.kr/gameResult.do?method=byWin&wiselog=M_A_1_8"
     }
 }

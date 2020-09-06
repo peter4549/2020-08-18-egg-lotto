@@ -5,8 +5,8 @@ import com.google.gson.Gson
 
 class Converters {
     @TypeConverter
-    fun arrayToJson(value: Array<Int>) = Gson().toJson(value)
+    fun arrayToJson(value: Array<Int>): String = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonToArray(value: String) = Gson().fromJson(value, Array<Int>::class.java)
+    fun jsonToArray(value: String): Array<Int> = Gson().fromJson(value, Array<Int>::class.java)
 }

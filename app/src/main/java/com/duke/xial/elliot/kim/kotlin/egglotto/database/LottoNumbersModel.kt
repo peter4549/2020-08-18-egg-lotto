@@ -26,8 +26,4 @@ data class LottoNumbersModel(@PrimaryKey(autoGenerate = true) val id: Int = 0,
         result = 31 * result + lottoNumbers.contentHashCode()
         return result
     }
-
-    fun deepCopy(id: Int = this.id, creationTime: String = this.creationTime,
-             lottoNumbers: Array<Int> = this.lottoNumbers) =
-        LottoNumbersModel(id, creationTime, lottoNumbers)
 }

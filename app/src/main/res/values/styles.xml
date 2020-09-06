@@ -48,4 +48,23 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="EditTextAccentColorStyle">
+        <item name="colorAccent">@color/colorEggOrange</item>
+        <item name="colorControlActivated">@color/colorEggOrange</item>
+        <item name="android:textSelectHandle">@android:drawable/edit_text</item>
+        <item name="android:textSelectHandleLeft">@color/colorEggOrange</item>
+        <item name="android:textSelectHandleRight">@color/colorEggOrange</item>
+    </style>
+
+    <style name="TextInputLayoutOutlinedBoxStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:theme">@style/TextInputEditTextOutlinedBoxTheme</item>
+    </style>
+
+    <style name="TextInputEditTextOutlinedBoxTheme" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorEggOrange</item>
+        <item name="colorControlActivated">@color/colorEggOrange</item>
+    </style>
+
 </resources>

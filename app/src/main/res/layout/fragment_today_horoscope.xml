@@ -1,192 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundDefault"
-    android:colorControlHighlight="@color/colorControlHighlight"
-    android:theme="@style/MaterialComponentsTheme">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text_view_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:padding="8dp"
-        android:text="@string/today_horoscope"
-        android:textColor="@color/colorTextDefault"
-        android:textSize="18sp"
-        android:fontFamily="@font/font_family_cookie_run_regular"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_title">
-
-        <RadioButton
-            android:id="@+id/radio_button_male"
-            style="@style/RadioButtonStyle"
-            android:layout_marginStart="16dp"
-            android:text="@string/male" />
-
-        <RadioButton
-            android:id="@+id/radio_button_female"
-            style="@style/RadioButtonStyle"
-            android:text="@string/female" />
-
-    </RadioGroup>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_birth"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center_vertical"
-        android:textColorHint="@color/colorBoxStroke"
-        app:boxStrokeColor="@color/colorBoxStroke"
-        app:boxStrokeWidth="2dp"
-        app:colorControlActivated="@color/colorTextInputEditTextColor"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/colorFrame"
-        app:errorEnabled="true"
-        app:errorTextAppearance="@style/FontCookieRunRegular"
-        app:errorTextColor="@color/colorFrame"
-        app:helperText="ex. 19940910"
-        app:helperTextEnabled="true"
-        app:helperTextTextAppearance="@style/FontCookieRunRegular"
-        app:hintTextColor="@color/colorBoxStroke"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_layout_calendar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:hint="@string/date_of_birth"
-            android:inputType="numberDecimal"
-            android:padding="12dp"
-            android:maxLength="8"
-            android:textAppearance="@style/FontCookieRunRegular"
-            android:textColor="@color/colorTextInputEditTextColor"
-            android:textCursorDrawable="@drawable/cursor"
-            android:textSize="16sp"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_calendar"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center_vertical"
-        app:boxBackgroundColor="@color/colorYellow"
-        app:boxCornerRadiusTopEnd="4dp"
-        app:boxCornerRadiusTopStart="4dp"
-        app:boxStrokeColor="@color/colorEggOrange"
-        app:boxStrokeWidth="1dp"
-        app:endIconTint="@color/colorTextDefault"
-        app:helperText="@string/lunar_or_solar"
-        app:helperTextEnabled="true"
-        app:helperTextTextAppearance="@style/FontCookieRunRegular"
-        app:layout_constraintBottom_toBottomOf="@+id/radio_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radio_group"
-        app:layout_constraintTop_toTopOf="@+id/radio_group">
+        android:background="@color/colorBackgroundDefault"
+        android:colorControlHighlight="@color/colorControlHighlight"
+        android:theme="@style/MaterialComponentsTheme">
 
-        <AutoCompleteTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:fontFamily="@font/font_family_cookie_run_regular"
-            android:inputType="none"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/colorTextDefault"
-            android:textSize="16sp"
-            tools:ignore="LabelFor"
-            tools:text="양력" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <FrameLayout
-        android:id="@+id/frame_layout_show_horoscope"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/button_radius_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_layout_birth">
-
-        <Button
-            android:id="@+id/button_show_horoscope"
+        <TextView
+            android:id="@+id/text_view_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:padding="8dp"
+            android:text="@string/today_horoscope"
+            android:textColor="@color/colorTextDefault"
+            android:textSize="18sp"
             android:fontFamily="@font/font_family_cookie_run_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title">
+
+            <RadioButton
+                android:id="@+id/radio_button_male"
+                style="@style/RadioButtonStyle"
+                android:layout_marginStart="16dp"
+                android:text="@string/male" />
+
+            <RadioButton
+                android:id="@+id/radio_button_female"
+                style="@style/RadioButtonStyle"
+                android:text="@string/female" />
+
+        </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_birth"
+            style="@style/TextInputLayoutOutlinedBoxStyle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            android:textColorHint="@color/colorBoxStroke"
+            android:backgroundTint="@color/colorEggOrange"
+            app:boxStrokeColor="@color/colorBoxStroke"
+            app:boxStrokeWidth="2dp"
+            app:colorControlActivated="@color/colorTextInputEditTextColor"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/colorFrame"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/FontCookieRunRegular"
+            app:errorTextColor="@color/colorFrame"
+            app:helperText="ex. 19940910"
+            app:helperTextEnabled="true"
+            app:helperTextTextAppearance="@style/FontCookieRunRegular"
+            app:hintTextColor="@color/colorBoxStroke"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_calendar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:hint="@string/date_of_birth"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:maxLength="8"
+                android:textAppearance="@style/FontCookieRunRegular"
+                android:textColor="@color/colorTextInputEditTextColor"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textColorHighlight="@color/colorControlHighlight"
+                android:textSize="16sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_calendar"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            app:boxBackgroundColor="@color/colorYellow"
+            app:boxCornerRadiusTopEnd="4dp"
+            app:boxCornerRadiusTopStart="4dp"
+            app:boxStrokeColor="@color/colorEggOrange"
+            app:boxStrokeWidth="1dp"
+            app:endIconTint="@color/colorTextDefault"
+            app:helperText="@string/lunar_or_solar"
+            app:helperTextEnabled="true"
+            app:helperTextTextAppearance="@style/FontCookieRunRegular"
+            app:layout_constraintBottom_toBottomOf="@+id/radio_group"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/radio_group"
+            app:layout_constraintTop_toTopOf="@+id/radio_group">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:fontFamily="@font/font_family_cookie_run_regular"
+                android:inputType="none"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/colorTextDefault"
+                android:textSize="16sp"
+                tools:ignore="LabelFor"
+                tools:text="양력" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_layout_show_horoscope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button_radius_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_birth">
+
+            <Button
+                android:id="@+id/button_show_horoscope"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/font_family_cookie_run_regular"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/show_horoscope"
+                android:textSize="18sp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/text_view_keyword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
             android:gravity="center"
-            android:padding="16dp"
-            android:text="@string/show_horoscope"
-            android:textSize="18sp" />
+            android:padding="4dp"
+            android:fontFamily="@font/font_family_cookie_run_regular"
+            android:textColor="@color/colorTextDefault"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frame_layout_show_horoscope"
+            tools:text="9월 5일의 운세 총운은 “나름대로” 입니다."/>
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/text_view_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/font_family_cookie_run_regular"
+            android:gravity="center_horizontal"
+            android:padding="4dp"
+            android:textColor="@color/colorTextLightDefault"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_keyword"
+            tools:text="큰 사고나 사건이 있는 날은 아니지만 작은 것으로 인해 피해를 볼 수 있고 심적으로 착잡한 상태에 놓이게 될 수도 있는 날입니다. 특히 헛된 소문이 당신을 괴롭힐 수도 있으니 미리 이런 소문이 돌지 않도록 행동과 언행에 주의하는 것이 필요할 것이지요. 난감한 상황에 처했을 때에는 시간이 약이라는 사실을 상기하세요. 소문과 구설이 나를 괴롭히는 날이지만 조급한 마음으로 반응하기보다는 태연한 태도를 지니는 것이 낫습니다. 마음에 관대함을 가지세요. 나쁜날은 아니니 크게 염려치는 않으셔도 됩니다." />
 
-    <TextView
-        android:id="@+id/text_view_keyword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center"
-        android:padding="4dp"
-        android:fontFamily="@font/font_family_cookie_run_regular"
-        android:textColor="@color/colorTextDefault"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame_layout_show_horoscope"
-        tools:text="9월 5일의 운세 총운은 “나름대로” 입니다."/>
-
-    <TextView
-        android:id="@+id/text_view_desc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:fontFamily="@font/font_family_cookie_run_regular"
-        android:gravity="center_horizontal"
-        android:padding="4dp"
-        android:textColor="@color/colorTextLightDefault"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_keyword"
-        tools:text="큰 사고나 사건이 있는 날은 아니지만 작은 것으로 인해 피해를 볼 수 있고 심적으로 착잡한 상태에 놓이게 될 수도 있는 날입니다. 특히 헛된 소문이 당신을 괴롭힐 수도 있으니 미리 이런 소문이 돌지 않도록 행동과 언행에 주의하는 것이 필요할 것이지요. 난감한 상황에 처했을 때에는 시간이 약이라는 사실을 상기하세요. 소문과 구설이 나를 괴롭히는 날이지만 조급한 마음으로 반응하기보다는 태연한 태도를 지니는 것이 낫습니다. 마음에 관대함을 가지세요. 나쁜날은 아니니 크게 염려치는 않으셔도 됩니다." />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

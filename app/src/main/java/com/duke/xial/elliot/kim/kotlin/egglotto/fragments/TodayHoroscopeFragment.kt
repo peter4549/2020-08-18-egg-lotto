@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -16,7 +18,6 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.R
 import com.duke.xial.elliot.kim.kotlin.egglotto.activities.MainActivity
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ResponseFailedException
 import com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2.DailyHoroscopeApisRequest
-import com.duke.xial.elliot.kim.kotlin.egglotto.showToast
 import kotlinx.android.synthetic.main.fragment_today_horoscope.*
 import kotlinx.android.synthetic.main.fragment_today_horoscope.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +34,7 @@ import java.util.*
 class TodayHoroscopeFragment: Fragment() {
 
     private lateinit var editTextBirth: com.google.android.material.textfield.TextInputEditText
+    private lateinit var fragmentView: View
     private lateinit var layoutBirth: com.google.android.material.textfield.TextInputLayout
     private lateinit var preferences: SharedPreferences
     private lateinit var textViewDesc: TextView
@@ -61,12 +63,15 @@ class TodayHoroscopeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_today_horoscope, container, false)
+        if (::fragmentView.isInitialized)
+            return fragmentView
 
-        textViewDesc = view.text_view_desc
-        textViewKeyword = view.text_view_keyword
-        editTextBirth = view.edit_text_birth
-        layoutBirth = view.text_input_layout_birth
+        fragmentView = inflater.inflate(R.layout.fragment_today_horoscope, container, false)
+
+        textViewDesc = fragmentView.text_view_desc
+        textViewKeyword = fragmentView.text_view_keyword
+        editTextBirth = fragmentView.edit_text_birth
+        layoutBirth = fragmentView.text_input_layout_birth
 
         editTextBirth.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -81,7 +86,7 @@ class TodayHoroscopeFragment: Fragment() {
         )
         restoreStates()
 
-        view.radio_group.setOnCheckedChangeListener { _, checkedId ->
+        fragmentView.radio_group.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radio_button_male -> checkedRadioButtonIndex = 0
                 R.id.radio_button_female -> checkedRadioButtonIndex = 1
@@ -90,18 +95,18 @@ class TodayHoroscopeFragment: Fragment() {
             gender = if (checkedRadioButtonIndex == 0) "m"
             else "f"
         }
-        view.radio_group.check(radioButtonIds[checkedRadioButtonIndex])
+        fragmentView.radio_group.check(radioButtonIds[checkedRadioButtonIndex])
 
         val adapter = ArrayAdapter(requireContext(), R.layout.item_view_calendar, calendars)
-        autoCompleteTextView = (view.text_input_layout_calendar.editText as? AutoCompleteTextView)
+        autoCompleteTextView = (fragmentView.text_input_layout_calendar.editText as? AutoCompleteTextView)
         autoCompleteTextView?.setAdapter(adapter)
         autoCompleteTextView?.setText(calendar, false)
 
-        view.button_show_horoscope.setOnClickListener {
+        fragmentView.button_show_horoscope.setOnClickListener {
             it.isEnabled = false
             val birth = editTextBirth.text.toString()
             editTextBirth.clearFocus()
-            hideKeyboard(view)
+            hideKeyboard(fragmentView)
 
             if (checkBirth(birth)) {
                 calendar = autoCompleteTextView?.text.toString()
@@ -114,13 +119,13 @@ class TodayHoroscopeFragment: Fragment() {
                 else
                     restoreAndSetHoroscope(results)
             } else {
-                view.text_view_keyword.text = ""
-                view.text_view_desc.text = ""
-                view.button_show_horoscope.isEnabled = true
+                fragmentView.text_view_keyword.text = ""
+                fragmentView.text_view_desc.text = ""
+                fragmentView.button_show_horoscope.isEnabled = true
             }
         }
 
-        return view
+        return fragmentView
     }
 
 
@@ -182,8 +187,8 @@ class TodayHoroscopeFragment: Fragment() {
     }
 
     private fun setHoroscopeText(contents: Pair<String, String>?) {
-        textViewKeyword.text = contents?.first ?: "오늘 운세를 불러오지 못했습니다."
-        textViewDesc.text = contents?.second ?: ""
+        setTextWithFadeInOut(textViewKeyword, contents?.first ?: "오늘 운세를 불러오지 못했습니다.")
+        setTextWithFadeInOut(textViewDesc, contents?.second ?: "")
         storeHoroscopeResult("$gender$calendar$validBirth",
             contents?.first ?: "", contents?.second ?: "")
     }
@@ -298,5 +303,36 @@ class TodayHoroscopeFragment: Fragment() {
         const val solar = "solar"
         const val lunarGeneral = "lunarGeneral"
         const val lunarLeap = "lunarLeap"
+    }
+
+    private fun setTextWithFadeInOut(textView: TextView, text: String) {
+        val fadeInAnimation = AlphaAnimation(0.0F, 1.0F)
+        val fadeOutAnimation = AlphaAnimation(1.0F, 0.0F)
+
+        fadeInAnimation.duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+        fadeOutAnimation.duration = fadeInAnimation.duration
+
+        fadeInAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(p0: Animation?) {  }
+
+            override fun onAnimationEnd(p0: Animation?) {  }
+
+            override fun onAnimationStart(p0: Animation?) {
+                textView.text = text
+            }
+        })
+
+        fadeOutAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(p0: Animation?) {  }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                textView.text = ""
+                textView.startAnimation(fadeInAnimation)
+            }
+
+            override fun onAnimationStart(p0: Animation?) {  }
+        })
+
+        textView.startAnimation(fadeOutAnimation)
     }
 }

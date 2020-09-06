@@ -6,6 +6,7 @@
 
     <color name="colorControlHighlight">#FFAA71</color>
     <color name="colorLightGrey">#B0B0B0</color>
+    <color name="colorLightGrey2">#A0A0A0</color>
 
     <color name="colorEggWhite">#F3F5E6</color>
     <color name="colorTextDefault">#424242</color>
@@ -32,4 +33,7 @@
     <!-- Text Input Layout -->
     <color name="mtrl_textinput_default_box_stroke_color">@color/colorEggOrange</color>  <!-- override -->
     <color name="colorTextInputEditTextColor">#263238</color>
+    <color name="colorGold">#FFD700</color>
+    <color name="colorSilver">#C0C0C0</color>
+    <color name="colorBronze">#cd7f32</color>
 </resources>

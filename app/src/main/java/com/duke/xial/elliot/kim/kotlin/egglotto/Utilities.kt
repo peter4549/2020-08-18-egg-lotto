@@ -1,5 +1,7 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -48,9 +50,6 @@ fun View.expand() {
                         originHeight
                 else
                     (targetHeight * interpolatedTime).toInt()
-
-
-            println("WWWWWW" + this@expand.layoutParams.height)
             this@expand.requestLayout()
         }
 
@@ -122,3 +121,44 @@ fun goToPlayStore(context: Context) {
         )
     }
 }
+
+fun View.fadeIn(duration: Int = resources.getInteger(android.R.integer.config_shortAnimTime),
+                animatorListenerAdapter: AnimatorListenerAdapter? = null) {
+    this.apply {
+        alpha = 0F
+        visibility = View.VISIBLE
+    }
+
+    animate()
+        .alpha(1F)
+        .setDuration(duration.toLong())
+        .setListener(animatorListenerAdapter)
+}
+
+fun View.fadeOut(duration: Int = resources.getInteger(android.R.integer.config_shortAnimTime)) {
+
+    this.animate()
+        .alpha(0F)
+        .setDuration(duration.toLong())
+        .setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                this@fadeOut.visibility = View.GONE
+            }
+        })
+}
+
+/*
+private fun startTimer() {
+    timerTask = timer(period = 60000L) {
+        if (timerCount > 0) {
+            runOnUiThread {
+                interstitialAd.loadAd(AdRequest.Builder().build())
+            }
+
+            showInterstitialAd = true
+            timerCount = -1
+        }
+        timerCount++
+    }
+}
+ */

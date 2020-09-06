@@ -50,4 +50,11 @@
     <string name="show_horoscope">운세보기</string>
     <string name="lunar_or_solar">음력/양력</string>
     <string name="my_lucky_numbers">내 행운의 숫자</string>
+    <string name="delete">Delete</string>
+    <string name="numbers_i_picked">내가 뽑은 번호들</string>
+    <string name="gold_medal">Gold Medal</string>
+    <string name="silver_medal">Silver Medal</string>
+    <string name="bronze_medal">Bronze Medal</string>
+    <string name="qr_code">QR 코드</string>
+    <string name="store_numbers">번호 저장</string>
 </resources>
