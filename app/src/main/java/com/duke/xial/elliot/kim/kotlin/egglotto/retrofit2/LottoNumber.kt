@@ -1,5 +1,6 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2
 
+/*
 import com.duke.xial.elliot.kim.kotlin.egglotto.models.LottoNumberModelTemp
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -33,10 +34,10 @@ object LottoNumberApisRequest {
             .build()
     }
 
-
     fun getLottoNumberService(): LottoNumberApis.LottoNumberService =
         getRetrofitAddedHeader().create(LottoNumberApis.LottoNumberService::class.java)
 
 }
+ */
 
 

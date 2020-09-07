@@ -1,9 +1,13 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
 import com.duke.xial.elliot.kim.kotlin.egglotto.getVersionName
 import com.duke.xial.elliot.kim.kotlin.egglotto.goToPlayStore
@@ -52,31 +56,55 @@ class SplashActivity : AppCompatActivity() {
     private fun showConfigMessage() {
         val message = messageMap[firebaseRemoteConfig.getString("message")] ?: firebaseRemoteConfig.getString("message")
         val exitWhenNotUpdating = firebaseRemoteConfig.getBoolean("exit_when_not_updating")
-        var positiveButtonClicked = false
+        var buttonClicked = false
         val builder = AlertDialog.Builder(this)
-        builder.setMessage(message)
+        builder
+            .setTitle(getString(R.string.notice))
+            .setMessage(message)
             .setPositiveButton(getString(R.string.update)) { _, _ ->
-                positiveButtonClicked = true
+                buttonClicked = true
                 goToPlayStore(this)
                 finish()
-            }
-            .setNegativeButton(
+            }.setNegativeButton(
                 if (exitWhenNotUpdating) getString(R.string.exit)
                 else getString(R.string.later)) { _, _ ->
-
+                buttonClicked = true
                 if (exitWhenNotUpdating)
                     finish()
                 else {
-                    positiveButtonClicked = false
-                }
-            }
-            .setOnDismissListener {
-                if (!positiveButtonClicked) {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
+            }.setOnDismissListener {
+                // Back button pressed
+                if (!buttonClicked)
+                    finish()
             }
-        builder.create().show()
+        builder.create()
+
+        val dialog = builder.show()!!
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(false)
+
+        val titleId = resources.getIdentifier("alertTitle", "id", packageName)
+        var titleTextView: TextView? = null
+        if (titleId > 0)
+            titleTextView = dialog.findViewById(titleId)!!
+
+        val messageTextView = dialog.findViewById<TextView>(android.R.id.message)!!
+        val okButton = dialog.findViewById<Button>(android.R.id.button1)!!
+        val cancelButton = dialog.findViewById<Button>(android.R.id.button2)!!
+
+        val font = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            resources.getFont(R.font.font_family_cookie_run_regular)
+        else ResourcesCompat.getFont(this, R.font.font_family_cookie_run_regular)
+
+        if (titleTextView != null)
+            titleTextView.typeface = font
+
+        messageTextView.typeface = font
+        okButton.typeface = font
+        cancelButton.typeface = font
     }
 
     companion object {

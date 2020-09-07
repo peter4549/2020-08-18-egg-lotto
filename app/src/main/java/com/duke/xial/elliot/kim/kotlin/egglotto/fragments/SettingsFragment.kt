@@ -28,7 +28,8 @@ class SettingsFragment: Fragment() {
     }
 
     private fun startLicensesFragment() {
-        requireFragmentManager().beginTransaction()
+        (requireActivity() as MainActivity).supportFragmentManager
+            .beginTransaction()
             .addToBackStack(null)
             .setCustomAnimations(
                 R.anim.anim_slide_in_left,

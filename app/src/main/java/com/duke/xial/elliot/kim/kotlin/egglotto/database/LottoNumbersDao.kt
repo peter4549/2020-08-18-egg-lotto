@@ -11,6 +11,7 @@ import androidx.room.Query
 interface LottoNumbersDao {
     @Query("SELECT * FROM lottonumbersmodel")
     fun getAll(): LiveData<MutableList<LottoNumbersModel>>
+    // ORDER BY creationTime DESC
 
     @Insert
     fun insert(note: LottoNumbersModel)

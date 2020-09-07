@@ -21,21 +21,21 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.dialog_fragment.EndDialogFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.EggBreakingFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.HistoryFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.SettingsFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.TodayHoroscopeFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.view_model.ViewModel
-import com.google.android.gms.ads.AdRequest
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_drawer.*
+import timber.log.Timber
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var adRequest: AdRequest
     lateinit var viewModel: ViewModel
     private lateinit var alarmManager: AlarmManager
     private lateinit var endDialogFragment: EndDialogFragment
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private val tabTexts = arrayOf(
         "달걀깨기", "오늘운세", "당첨결과", "기록"
     )
+    val eggBreakingFragment = EggBreakingFragment()
     val historyFragment = HistoryFragment()
     val todayHoroscopeFragment = TodayHoroscopeFragment()
 
@@ -60,10 +61,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_drawer)
 
-        endDialogFragment = EndDialogFragment()
+        setupTimber()
+
+        endDialogFragment = EndDialogFragment(this)
         errorHandler = ErrorHandler(this)
 
-        adRequest = AdRequest.Builder().build()
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         mediaPlayer = MediaPlayer.create(this, R.raw.egg_cracking_sound)
 
@@ -73,12 +75,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.getAll().observe(this, androidx.lifecycle.Observer { lottoNumbersList ->
             when (viewModel.state) {
                 ViewModel.INITIALIZE -> {
+                    historyInitialized = true
                     historyFragment.lottoNumbersRecyclerViewAdapter.insertAll(lottoNumbersList)
                     viewModel.state = ViewModel.INITIALIZED
                 }
-                ViewModel.INSERT -> historyFragment.lottoNumbersRecyclerViewAdapter.insert(
-                    lottoNumbersList[lottoNumbersList.size - 1]
-                )
+                ViewModel.INSERT -> {
+                    historyFragment.lottoNumbersRecyclerViewAdapter.insert(
+                        lottoNumbersList[lottoNumbersList.size - 1], 0 //lottoNumbersList.size - 1
+                    )
+                    ++historiesAddedRange
+                }
                 ViewModel.DELETE -> historyFragment.lottoNumbersRecyclerViewAdapter.remove(viewModel.changedLottoNumbers)
             }
         })
@@ -89,6 +95,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.app_name)
         toolbar.setNavigationIcon(R.drawable.ic_raw_egg_32)
+
+        initializeTabLayoutViewPager(tab_layout, view_pager)
 
         soundState = getSoundState()
         weeklyAlarmState = getWeeklyAlarmState()
@@ -105,7 +113,6 @@ class MainActivity : AppCompatActivity() {
             }
             soundState = isChecked
         }
-
 
         switch_weekly_alarm.isChecked = weeklyAlarmState
         switch_weekly_alarm.setOnCheckedChangeListener { _, isChecked ->
@@ -133,7 +140,13 @@ class MainActivity : AppCompatActivity() {
             integrator.initiateScan()
         }
 
-        initializeTabLayoutViewPager(tab_layout, view_pager)
+        text_view_share.setOnClickListener {
+            shareApplication(this)
+        }
+    }
+
+    private fun setupTimber() {
+        Timber.plant(Timber.DebugTree())
     }
 
     private fun initializeTabLayoutViewPager(tabLayout: TabLayout, viewPager: ViewPager2) {
@@ -286,5 +299,7 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         private const val TAG_SETTINGS_FRAGMENT = "tag_settings_fragment"
         private const val TAG_WEB_VIEW_FRAGMENT = "tag_web_view_fragment"
+        var historyInitialized = false
+        var historiesAddedRange = 0
     }
 }

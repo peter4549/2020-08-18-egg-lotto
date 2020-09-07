@@ -1,11 +1,15 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto.fragments
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.duke.xial.elliot.kim.kotlin.egglotto.GridLayoutManagerWrapper
 import com.duke.xial.elliot.kim.kotlin.egglotto.R
@@ -14,6 +18,9 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.database.LottoNumbersModel
 import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.item_view_lotto_numbers.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HistoryFragment: Fragment() {
 
@@ -40,9 +47,35 @@ class HistoryFragment: Fragment() {
     }
 
     override fun onResume() {
-        lottoNumbersRecyclerViewAdapter.notifyDataSetChanged()
-        setLuckyNumbers(lottoNumbersRecyclerViewAdapter.lottoNumbersList)
         super.onResume()
+        if (MainActivity.historyInitialized) {
+            MainActivity.historyInitialized = false
+            recycler_view_history.scheduleLayoutAnimation()
+            lottoNumbersRecyclerViewAdapter.notifyDataSetChanged()
+            MainActivity.historiesAddedRange = 0
+        } else if (MainActivity.historiesAddedRange > 0) {
+            val position = 0
+            CoroutineScope(Dispatchers.Main).launch {
+                lottoNumbersRecyclerViewAdapter.notifyItemRangeInserted(
+                    position, MainActivity.historiesAddedRange
+                )
+                val linearSmoothScroller: LinearSmoothScroller =
+                    object : LinearSmoothScroller(recycler_view_history.context) {
+                        override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
+                            return 200F / displayMetrics.densityDpi
+                        }
+
+                        override fun getVerticalSnapPreference(): Int {
+                            return SNAP_TO_START
+                        }
+                    }
+                linearSmoothScroller.targetPosition = position
+                recycler_view_history.layoutManager!!.startSmoothScroll(linearSmoothScroller)
+                MainActivity.historiesAddedRange = 0
+            }
+        }
+
+        setLuckyNumbers(lottoNumbersRecyclerViewAdapter.lottoNumbersList)
     }
 
     private fun setLuckyNumbers(lottoNumbersList: MutableList<LottoNumbersModel>) {
@@ -110,6 +143,7 @@ class HistoryFragment: Fragment() {
     inner class LottoNumbersRecyclerViewAdapter:
         RecyclerView.Adapter<LottoNumbersRecyclerViewAdapter.ViewHolder>() {
 
+        private var lastPosition = -1
         var lottoNumbersList: ArrayList<LottoNumbersModel> = arrayListOf()
 
         inner class ViewHolder(val view: View): RecyclerView.ViewHolder(view)
@@ -129,6 +163,7 @@ class HistoryFragment: Fragment() {
             holder.view.image_delete.setOnClickListener {
                 (requireActivity() as MainActivity).viewModel.delete(lottoNumbers)
             }
+            setAnimation(holder.view, position)
         }
 
         override fun getItemCount(): Int = lottoNumbersList.count()
@@ -149,6 +184,7 @@ class HistoryFragment: Fragment() {
         }
 
         fun insertAll(lottoNumbersList: MutableList<LottoNumbersModel>) {
+            lottoNumbersList.reverse()
             this.lottoNumbersList = lottoNumbersList as ArrayList<LottoNumbersModel>
         }
 
@@ -161,6 +197,16 @@ class HistoryFragment: Fragment() {
             lottoNumbersList.removeAt(position)
             updateLuckyNumbers(lottoNumbers)
             notifyItemRemoved(position)
+        }
+
+        private fun setAnimation(view: View, position: Int) {
+            // If the bound view wasn't previously displayed on screen, it's animated.
+            if (position > lastPosition) {
+                val animation: Animation =
+                    AnimationUtils.loadAnimation(context, R.anim.anim_recycler_view)
+                view.startAnimation(animation)
+                lastPosition = position
+            }
         }
     }
 }

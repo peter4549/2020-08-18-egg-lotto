@@ -5,9 +5,6 @@ data class LicenseModel(val name: String,
                         val copyright: String?)
 
 internal val licenses = arrayListOf(
-    LicenseModel("jsoup",
-        "https://jsoup.org/license",
-        "jsoup.txt"),
     LicenseModel("Retrofit",
         "https://square.github.io/retrofit/",
         "retrofit.txt"),

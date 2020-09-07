@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">에그 로또</string>
     <string name="ad_mob_app_id">ca-app-pub-2713759975650849~3531955908</string>
-    <string name="banner_ad_unit_id">ca-app-pub-2713759975650849/5205620914</string>
-    <string name="interstitial_ad_unit_id">ca-app-pub-2713759975650849/1537784749</string>
+    <!-- <string name="banner_ad_unit_id">ca-app-pub-2713759975650849/5205620914</string> -->
+    <!-- <string name="interstitial_ad_unit_id">ca-app-pub-2713759975650849/1537784749</string> -->
+    <string name="native_advanced_ad_unit_id">ca-app-pub-2713759975650849/6415512800</string>
+    <!-- <string name="native_advanced_ad_unit_test_id">ca-app-pub-3940256099942544/2247696110</string> -->
 
     <string name="game_result_url">https://dhlottery.co.kr/gameResult.do?method=byWin</string>
     <string name="latest_winning_number">0000회 당첨결과(최신)</string>
@@ -57,4 +59,6 @@
     <string name="bronze_medal">Bronze Medal</string>
     <string name="qr_code">QR 코드</string>
     <string name="store_numbers">번호 저장</string>
+    <string name="share">공유하기</string>
+    <string name="icon">Icon</string>
 </resources>

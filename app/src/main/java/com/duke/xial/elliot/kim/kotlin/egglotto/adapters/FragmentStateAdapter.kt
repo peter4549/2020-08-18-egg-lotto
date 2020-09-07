@@ -14,7 +14,7 @@ class FragmentStateAdapter(private val fragmentActivity: FragmentActivity):
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> EggBreakingFragment()
+            0 -> (fragmentActivity as MainActivity).eggBreakingFragment
             1 -> (fragmentActivity as MainActivity).todayHoroscopeFragment
             2 -> WebViewFragment()
             3 -> (fragmentActivity as MainActivity).historyFragment

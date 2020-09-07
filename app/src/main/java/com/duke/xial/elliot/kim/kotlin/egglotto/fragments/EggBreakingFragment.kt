@@ -48,7 +48,7 @@ class EggBreakingFragment: Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 fragmentView.button_break_at_once.isEnabled = false
                 refreshEggs()
-                delay(120L)
+                delay(110L)
                 fragmentView.button_break_at_once.isEnabled = true
             }
         }
@@ -238,7 +238,7 @@ class EggBreakingFragment: Fragment() {
         }
     }
 
-    private fun getCurrentTime() = SimpleDateFormat("yyyy.MM.dd. hh:mm:ss",
+    private fun getCurrentTime() = SimpleDateFormat("yyyy.MM.dd. hh:mm:ss a",
         Locale.getDefault()).format(System.currentTimeMillis())
 
     inner class NumbersRecyclerViewAdapter(layoutId: Int, numbers: ArrayList<Int>)

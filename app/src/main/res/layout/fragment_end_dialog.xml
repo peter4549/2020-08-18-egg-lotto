@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/colorEggWhite">
+    android:background="@color/colorLightYellow">
 
     <TextView
         android:id="@+id/text_view_title"
@@ -20,15 +20,23 @@
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/ad_view"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        ads:adSize="MEDIUM_RECTANGLE"
-        ads:adUnitId="@string/banner_ad_unit_id"
+    <View
+        android:id="@+id/bolder"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/colorYellow"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/text_view_title" />
+
+    <FrameLayout
+        android:id="@+id/ad_frame"
+        android:layout_width="@dimen/ad_frame_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/bolder" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -36,7 +44,8 @@
         android:orientation="horizontal"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/ad_view">
+        ads:layout_constraintTop_toBottomOf="@+id/ad_frame"
+        android:baselineAligned="false">
 
     <FrameLayout
         android:id="@+id/frame_layout_go_to_review"

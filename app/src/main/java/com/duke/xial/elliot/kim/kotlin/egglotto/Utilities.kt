@@ -122,6 +122,17 @@ fun goToPlayStore(context: Context) {
     }
 }
 
+fun shareApplication(context: Context) {
+    val intent = Intent(Intent.ACTION_SEND)
+    val text = "https://play.google.com/store/apps/details?id=${context.packageName}"
+
+    intent.type = "text/plain"
+    intent.putExtra(Intent.EXTRA_TEXT, text)
+
+    val chooser = Intent.createChooser(intent, "공유하기")
+    context.startActivity(chooser)
+}
+
 fun View.fadeIn(duration: Int = resources.getInteger(android.R.integer.config_shortAnimTime),
                 animatorListenerAdapter: AnimatorListenerAdapter? = null) {
     this.apply {

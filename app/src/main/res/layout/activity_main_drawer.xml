@@ -100,6 +100,19 @@
                 android:background="?attr/selectableItemBackground"
                 app:drawableStartCompat="@drawable/ic_qr_code_24" />
 
+            <TextView
+                android:id="@+id/text_view_share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="@string/share"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:drawablePadding="16dp"
+                android:background="?attr/selectableItemBackground"
+                app:drawableStartCompat="@drawable/ic_baseline_share_24" />
+
         </LinearLayout>
 
     </com.google.android.material.navigation.NavigationView>

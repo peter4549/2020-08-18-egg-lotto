@@ -1,97 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="2dp">
+    android:background="@color/colorLightYellow">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/text_creation_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2020.09.10. 00:00:00"/>
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_01"
+        style="@style/EggTextViewStyle"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/text_creation_time"
+        app:layout_constraintTop_toBottomOf="@+id/text_creation_time" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_02"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="4dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_03"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_01"
+        app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_01" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_03"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="4dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_04"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_02"
+        app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_02" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_04"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="4dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_05"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_03"
+        app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_03" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_05"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@string/winning_lotto_number"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_06"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_04"
+        app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_04" />
+
+    <TextView
+        android:id="@+id/text_view_lotto_number_06"
+        style="@style/EggTextViewStyle"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@+id/image_delete"
+        app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_05"
+        app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_05" />
+
+    <ImageView
+        android:id="@+id/image_delete"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="32dp"
+        android:contentDescription="@string/delete"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_lotto_number_06"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_delete_forever_28" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0.5dp"
+        android:background="@color/colorSilver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:id="@+id/text_creation_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2020.09.10. 00:00:00"/>
-
-        <TextView
-            android:id="@+id/text_view_lotto_number_01"
-            style="@style/EggTextViewStyle"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="12dp"
-            android:enabled="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_creation_time"
-            app:layout_constraintTop_toBottomOf="@+id/text_creation_time" />
-
-        <TextView
-            android:id="@+id/text_view_lotto_number_02"
-            style="@style/EggTextViewStyle"
-            android:layout_marginStart="4dp"
-            android:enabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_03"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_01"
-            app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_01" />
-
-        <TextView
-            android:id="@+id/text_view_lotto_number_03"
-            style="@style/EggTextViewStyle"
-            android:layout_marginStart="4dp"
-            android:enabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_04"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_02"
-            app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_02" />
-
-        <TextView
-            android:id="@+id/text_view_lotto_number_04"
-            style="@style/EggTextViewStyle"
-            android:layout_marginStart="4dp"
-            android:enabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_05"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_03"
-            app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_03" />
-
-        <TextView
-            android:id="@+id/text_view_lotto_number_05"
-            style="@style/EggTextViewStyle"
-            android:layout_marginStart="4dp"
-            android:contentDescription="@string/winning_lotto_number"
-            android:enabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/text_view_lotto_number_06"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_04"
-            app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_04" />
-
-        <TextView
-            android:id="@+id/text_view_lotto_number_06"
-            style="@style/EggTextViewStyle"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="8dp"
-            android:enabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/image_delete"
-            app:layout_constraintStart_toEndOf="@+id/text_view_lotto_number_05"
-            app:layout_constraintTop_toTopOf="@+id/text_view_lotto_number_05" />
-
-        <ImageView
-            android:id="@+id/image_delete"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="32dp"
-            android:contentDescription="@string/delete"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_lotto_number_06"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_baseline_delete_forever_28" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,8 @@
 package com.duke.xial.elliot.kim.kotlin.egglotto.retrofit2
 
-import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -22,11 +20,6 @@ object DailyHoroscope {
             @Query("solarCal") solarCal: String
         ): Call<String>
     }
-    //base url - https://m.search.naver.com/p/csearch/dcontent/external_api/json_todayunse_v2.naver?_callback=window.__jindo2_callback._fortune_my_0
-    // &gender=f&birth=19940910&solarCal=solar&time=0
-    // gender에 m, f
-    // birth 19940910 같은거.
-    // solarCal에 solar/lularGeneral, lunarLeap
 }
 
 object DailyHoroscopeApisRequest {

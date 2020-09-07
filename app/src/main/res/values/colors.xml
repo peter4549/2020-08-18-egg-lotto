@@ -36,4 +36,5 @@
     <color name="colorGold">#FFD700</color>
     <color name="colorSilver">#C0C0C0</color>
     <color name="colorBronze">#cd7f32</color>
+    <color name="colorLightYellow">#fffde7</color>
 </resources>
