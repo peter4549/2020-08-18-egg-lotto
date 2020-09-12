@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/colorLightYellow">
+    android:background="@drawable/layout_radius_background">
 
     <TextView
         android:id="@+id/text_view_title"
@@ -54,9 +54,8 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_margin="8dp"
-        android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:background="@color/colorEggOrange"
+        android:background="@drawable/button_radius_background_orange"
         android:foreground="?attr/selectableItemBackground">
 
         <Button
@@ -78,7 +77,7 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:layout_marginBottom="8dp"
-            android:background="@color/colorEggOrange"
+            android:background="@drawable/button_radius_background_orange"
             android:foreground="?attr/selectableItemBackground">
 
             <Button
