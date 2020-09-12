@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_web_view.view.*
 
 class WebViewFragment : Fragment() {
 
+    lateinit var webView: WebView
     private lateinit var fragmentView: View
 
     override fun onCreateView(
@@ -24,11 +25,12 @@ class WebViewFragment : Fragment() {
             return fragmentView
 
         fragmentView = inflater.inflate(R.layout.fragment_web_view, container, false)
+        webView = fragmentView.web_view
 
-        val webSettings: WebSettings = fragmentView.web_view.settings
+        val webSettings: WebSettings = webView.settings
         @SuppressLint("SetJavaScriptEnabled")
         webSettings.javaScriptEnabled = true
-        fragmentView.web_view.webViewClient = object : WebViewClient() {
+        webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 println("$TAG: page loaded, url: $url")
             }

@@ -16,7 +16,7 @@ class FragmentStateAdapter(private val fragmentActivity: FragmentActivity):
         return when (position) {
             0 -> (fragmentActivity as MainActivity).eggBreakingFragment
             1 -> (fragmentActivity as MainActivity).todayHoroscopeFragment
-            2 -> WebViewFragment()
+            2 -> (fragmentActivity as MainActivity).webViewFragment
             3 -> (fragmentActivity as MainActivity).historyFragment
             else -> throw Exception("invalid fragment")
         }

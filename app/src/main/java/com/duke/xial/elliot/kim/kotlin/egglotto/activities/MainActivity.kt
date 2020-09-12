@@ -21,10 +21,7 @@ import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.AlarmReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.broadcast_receiver.DeviceBootReceiver
 import com.duke.xial.elliot.kim.kotlin.egglotto.dialog_fragment.EndDialogFragment
 import com.duke.xial.elliot.kim.kotlin.egglotto.error_handler.ErrorHandler
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.EggBreakingFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.HistoryFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.SettingsFragment
-import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.TodayHoroscopeFragment
+import com.duke.xial.elliot.kim.kotlin.egglotto.fragments.*
 import com.duke.xial.elliot.kim.kotlin.egglotto.view_model.ViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -56,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     val eggBreakingFragment = EggBreakingFragment()
     val historyFragment = HistoryFragment()
     val todayHoroscopeFragment = TodayHoroscopeFragment()
+    val webViewFragment = WebViewFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,13 +160,12 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (drawer_layout_activity_main.isDrawerOpen(GravityCompat.END))
             drawer_layout_activity_main.closeDrawer(GravityCompat.END)
-        else
-            when {
-                supportFragmentManager.findFragmentByTag(TAG_LICENSES_FRAGMENT) != null -> super.onBackPressed()
-                supportFragmentManager.findFragmentByTag(TAG_SETTINGS_FRAGMENT) != null -> super.onBackPressed()
-                supportFragmentManager.findFragmentByTag(TAG_WEB_VIEW_FRAGMENT) != null -> super.onBackPressed()
-                else -> endDialogFragment.show(supportFragmentManager, TAG)
-            }
+        else {
+            if (view_pager.currentItem == 2 && webViewFragment.webView.canGoBack())
+                webViewFragment.webView.goBack()
+            else
+                endDialogFragment.show(supportFragmentManager, TAG)
+        }
     }
 
     override fun onPause() {
@@ -298,7 +295,6 @@ class MainActivity : AppCompatActivity() {
         private const val KEY_SOUND_STATE = "key_sound_state"
         private const val TAG = "MainActivity"
         private const val TAG_SETTINGS_FRAGMENT = "tag_settings_fragment"
-        private const val TAG_WEB_VIEW_FRAGMENT = "tag_web_view_fragment"
         var historyInitialized = false
         var historiesAddedRange = 0
     }

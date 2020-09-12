@@ -26,7 +26,7 @@
     <color name="colorRedShadow">#c50e29</color>
     <color name="colorYellowShadow">#c7cc00</color>
 
-    <color name="colorFrame">#e25822</color>
+    <color name="colorFlame">#e25822</color>
 
     <color name="colorBoxStroke">@color/colorEggOrange</color>
 
