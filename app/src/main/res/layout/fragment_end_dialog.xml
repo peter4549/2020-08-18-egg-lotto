@@ -31,8 +31,10 @@
 
     <FrameLayout
         android:id="@+id/ad_frame"
-        android:layout_width="@dimen/ad_frame_width"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
