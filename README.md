@@ -6,7 +6,7 @@ Android 5.0 버전 이상을 지원합니다. (Lollipop version, SDK >= 21)
 QR 코드 인식기, 주간 당첨발표시간 알림 및 오늘의 운세를 제공합니다.
 
 ## Features
-1. Lotto number recommendation
+# 1. Lotto Number Generation
 * 랜덤으로 로또 번호를 생성합니다.
 </br>
 <img src="screenshots/screenshot_number_gen.jpg" width="300px" height="450px" title="Lotto Number Generation" alt="Screenshot"></img><br/>
