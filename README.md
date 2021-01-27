@@ -9,11 +9,11 @@ version 21 위로 표시.
 5. Today's horoscope
 6. Check the winning result
 
-## Opensource Library
-1. Glide
+## Dependencies
+1. [Glide](https://github.com/bumptech/glide)
 2. Retrofit2
 3. Timber
 4. Zxing
 
 ## Playstore
-[Egg Lotto](https://play.google.com/store/apps/details?id=com.duke.xial.elliot.kim.kotlin.egglotto, "playstore link")
+[Egg Lotto](https://play.google.com/store/apps/details?id=com.duke.xial.elliot.kim.kotlin.egglotto)
