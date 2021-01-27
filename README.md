@@ -16,4 +16,4 @@ version 21 위로 표시.
 4. Zxing
 
 ## Playstore
-[Google](https://google.com, "google link")
+[Egg Lotto](https://play.google.com/store/apps/details?id=com.duke.xial.elliot.kim.kotlin.egglotto, "playstore link")
