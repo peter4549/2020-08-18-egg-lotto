@@ -8,7 +8,8 @@ QR 코드 인식기, 주간 당첨발표시간 알림 및 오늘의 운세를 �
 ## Features
 1. Lotto number recommendation
 * 랜덤으로 로또 번호를 생성합니다.
-<img src="/path/to/img.jpg" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+</br>
+<img src="screenshots/horoscope.jpg" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 <img src="/path/to/img.jpg" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
 2. Save selected number
 * Room을 사용하여 선택한 번호를 데이터베이스에 저장합니다.
