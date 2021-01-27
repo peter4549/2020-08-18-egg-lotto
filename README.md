@@ -9,7 +9,7 @@ QR 코드 인식기, 주간 당첨발표시간 알림 및 오늘의 운세를 �
 ### 1. Lotto Number Generation
 * 달걀을 터치하면 달걀이 깨지며 로또 번호를 생성합니다.
 </br>
-<img src="screenshots/screenshot_number_gen.jpg" width="300px" height="600px" title="Lotto Number Generation" alt="Screenshot"></img><br/>
+<img src="screenshots/screenshot_number_gen.jpg" width="200px" height="400px" title="Lotto Number Generation" alt="Screenshot"></img><br/>
 <img src="/path/to/img.jpg" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
 ### 2. Save selected number
 * Room을 사용하여 선택한 번호를 데이터베이스에 저장합니다.
